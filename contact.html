@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - Christian G. Mendoza</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: aliceblue;
+    color: darkblue;
+}
+
+header {
+    background-color: skyblue;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+
+header h1 {
+    font-size: 24px;
+    color: navy;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 14px;
+    color: darkblue;
+}
+
+.wrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+article {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+    border-left: 5px solid deepskyblue;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+article h2 {
+    color: deepskyblue;
+    margin-bottom: 15px;
+}
+
+article p {
+    margin-bottom: 1.3em;
+    text-align: justify;
+}
+
+article strong {
+    font-weight: bold;
+}
+
+article em {
+    font-style: italic;
+}
+
+article blockquote {
+    border-left: 3px solid deepskyblue;
+    margin: 1em 0;
+    padding-left: 12px;
+    color: #003366;
+    font-style: italic;
+}
+
+.contact-info {
+    margin-top: 15px;
+}
+
+.contact-info p {
+    margin-bottom: 0.8em;
+}
+
+.sidebar {
+    width: 60px;
+    background-color: rgba(176, 224, 230, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    transition: width 0.3s;
+    backdrop-filter: blur(4px);
+    flex-wrap: wrap;
+}
+
+.sidebar:hover {
+    width: 160px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: darkblue;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 17px;
+    height: 44px;
+}
+
+.sidebar a:hover {
+    background-color: deepskyblue;
+    color: white;
+    transform: translateX(5px);
+}
+
+.sidebar a span.text {
+    display: none;
+    font-size: 17px;
+}
+
+.sidebar:hover a span.text {
+    display: inline;
+}
+
+footer {
+    background-color: skyblue;
+    text-align: center;
+    padding: 15px;
+    color: navy;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+}
+.contact-info a {
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+    header h1 { font-size: 20px; }
+    header p { font-size: 12px; }
+    .wrapper { flex-direction: column; }
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        gap: 0;
+        padding: 5px 0;
+        transition: none;
+        overflow: hidden;
+    }
+    .sidebar:hover {
+        width: 100% !important;
+    }
+    .sidebar a {
+        padding: 8px 5px;
+        justify-content: center;
+        font-size: 12px;
+        flex: 1 0 0;
+        flex-shrink: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .sidebar a span.text { display: inline; font-size: 12px; }
+    .main-content { padding: 15px; }
+    footer { font-size: 11px; padding: 10px; }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        padding: 3px 0;
+    }
+    .sidebar a {
+        padding: 6px;
+        font-size: 11px;
+        height: 40px;
+    }
+    .sidebar a span.text {
+        font-size: 10px;
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Christian G. Mendoza</h1>
+    <p>Exploring life, learning every step, building better habits</p>
+</header>
+
+<div class="wrapper">
+    <div class="main-content">
+        <section>
+            <article>
+                <h2>Contact</h2>
+
+                <p>If you’ve made it this far, thank you for stopping by and spending a moment in this space I’ve created to share my thoughts. This is also the place where you can reach out if you want to say hi, share a thought, or leave a note. I don’t always have all the answers, but I genuinely enjoy hearing from people who resonate with my journey or anyone who just wants to connect.</p>
+
+                <div class="contact-info">
+                    <p><strong>Email:</strong> christianmendozagaleon@gmail.com</p>
+                    <p><strong>Phone:</strong> 09765341340</p>
+                    <p>
+                    <strong>LinkedIn:</strong>
+                    <a href="https://www.linkedin.com/in/mendozagaleonchristian"
+                        target="_blank" rel="noopener noreferrer">
+                        www.linkedin.com/in/mendozagaleonchristian
+                    </a>
+                    </p>
+                                    <p>
+                    <strong>Facebook:</strong>
+                    <a href="https://www.facebook.com/christian.galeon.mendoza"
+                        target="_blank" rel="noopener noreferrer">
+                        facebook.com/christian.galeon.mendoza
+                    </a>
+                </div>
+
+                <p>Even small connections matter. Each message, each hello, is a reminder that learning, growing, and sharing is not something I do alone. I hope that anyone who stops by feels welcome to reach out and be part of this journey in their own way.</p>
+
+                <blockquote>"Life is full of small interactions that matter more than we realize. Even a simple hello can start something meaningful."</blockquote>
+            </article>
+        </section>
+    </div>
+
+    <aside class="sidebar">
+        <a href="index.html"><span>🏠</span><span class="text">Home</span></a>
+        <a href="about.html"><span>👤</span><span class="text">About Me</span></a>
+        <a href="journey.html"><span>🏆</span><span class="text">Journey</span></a>
+        <a href="blogs.html"><span>📝</span><span class="text">Blogs</span></a>
+        <a href="extras.html"><span>🎮</span><span class="text">Extras</span></a>
+        <a href="gallery.html"><span>🖼️</span><span class="text">Gallery</span></a>
+        <a href="contact.html"><span>✉️</span><span class="text">Contact</span></a>
+    </aside>
+</div>
+
+<footer>
+    &copy; 2026 Christian G. Mendoza
+</footer>
+
+</body>
+</html>

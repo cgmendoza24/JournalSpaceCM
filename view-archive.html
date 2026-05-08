@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog Archive - Christian G. Mendoza</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: aliceblue;
+    color: darkblue;
+}
+
+header {
+    background-color: skyblue;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+
+header h1 {
+    font-size: 24px;
+    color: navy;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 14px;
+    color: darkblue;
+}
+
+.wrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.archive-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.calendar-section {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(6px);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.calendar-header button {
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), rgba(0, 191, 255, 0.05));
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    font-size: 18px;
+    color: navy;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
+.calendar-header button:hover {
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.2), rgba(0, 191, 255, 0.1));
+    border-color: rgba(0, 191, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+.month-year-display {
+    flex: 1;
+    text-align: center;
+}
+
+.month-year-display h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: navy;
+    letter-spacing: 0.5px;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.filter-group label {
+    font-size: 13px;
+    font-weight: bold;
+    color: navy;
+}
+
+.filter-group select {
+    padding: 8px 12px;
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 6px;
+    font-size: 13px;
+    color: navy;
+    cursor: pointer;
+    background: rgba(0, 191, 255, 0.05);
+    transition: all 0.2s ease;
+}
+
+.filter-group select:hover,
+.filter-group select:focus {
+    background: rgba(0, 191, 255, 0.1);
+    border-color: rgba(0, 191, 255, 0.6);
+    outline: none;
+}
+
+.filter-btn {
+    padding: 6px 12px;
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 6px;
+    font-size: 12px;
+    color: navy;
+    cursor: pointer;
+    background: rgba(0, 191, 255, 0.05);
+    transition: all 0.2s ease;
+    font-weight: 600;
+}
+
+.filter-btn:hover {
+    background: rgba(0, 191, 255, 0.1);
+    border-color: rgba(0, 191, 255, 0.6);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.3), rgba(0, 191, 255, 0.2));
+    border-color: rgba(0, 191, 255, 0.8);
+    color: deepskyblue;
+    font-weight: 700;
+}
+
+.custom-date-range {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    padding: 15px;
+    background: rgba(0, 191, 255, 0.05);
+    border-radius: 8px;
+    margin-top: 15px;
+    border: 1px solid rgba(0, 191, 255, 0.2);
+}
+
+.date-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.date-input-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: navy;
+}
+
+.date-input-group input {
+    padding: 8px 10px;
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 6px;
+    font-size: 12px;
+    color: navy;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.2s ease;
+}
+
+.date-input-group input:focus {
+    outline: none;
+    background: white;
+    border-color: rgba(0, 191, 255, 0.8);
+    box-shadow: 0 0 0 2px rgba(0, 191, 255, 0.1);
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #0066aa;
+    margin-bottom: 15px;
+    gap: 6px;
+    letter-spacing: 0.5px;
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.day {
+    text-align: center;
+    padding: 12px 6px;
+    font-size: 14px;
+    color: #999;
+    cursor: default;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.day:hover {
+    background: rgba(0, 191, 255, 0.08);
+}
+
+.day.active {
+    background: linear-gradient(135deg, #0099ff 0%, #0066ff 100%);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
+}
+
+.day.active::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+}
+
+.day.active:hover {
+    background: linear-gradient(135deg, #0088ff 0%, #0055ff 100%);
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 102, 255, 0.3);
+}
+
+.day.empty {
+    cursor: default;
+    color: transparent;
+    background: transparent;
+}
+
+.entries-section {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(6px);
+}
+
+.entries-header {
+    font-size: 18px;
+    font-weight: 700;
+    color: deepskyblue;
+    margin-bottom: 20px;
+}
+
+.entries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.entry-item {
+    padding: 15px;
+    border-left: 4px solid deepskyblue;
+    background: rgba(0, 191, 255, 0.03);
+    border-radius: 8px;
+    cursor: default;
+    transition: all 0.2s ease;
+}
+
+.entry-item:hover {
+    background: rgba(0, 191, 255, 0.08);
+}
+
+.entry-title {
+    font-weight: bold;
+    color: navy;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.entry-title:hover {
+    color: deepskyblue;
+}
+
+.entry-date {
+    font-size: 13px;
+    color: #666;
+}
+
+.no-entries {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    font-style: italic;
+}
+
+article {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    line-height: 1.9;
+    border-left: 5px solid deepskyblue;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+article h2 {
+    color: deepskyblue;
+    margin-bottom: 15px;
+}
+
+article .date {
+    font-size: 16px;
+    color: navy;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-style: normal;
+}
+
+article p {
+    margin-bottom: 1.3em;
+    text-align: justify;
+}
+
+article strong {
+    font-weight: bold;
+}
+
+article em {
+    font-style: italic;
+}
+
+article blockquote {
+    border-left: 3px solid deepskyblue;
+    margin: 1em 0;
+    padding-left: 12px;
+    color: #003366;
+    font-style: italic;
+}
+
+.sidebar {
+    width: 60px;
+    background-color: rgba(176, 224, 230, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    transition: width 0.3s;
+    backdrop-filter: blur(4px);
+    flex-wrap: wrap;
+}
+
+.sidebar:hover {
+    width: 160px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: darkblue;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 17px;
+    height: 44px;
+}
+
+.sidebar a:hover {
+    background-color: deepskyblue;
+    color: white;
+    transform: translateX(5px);
+}
+
+.sidebar a span.text {
+    display: none;
+}
+
+.sidebar:hover a span.text {
+    display: inline;
+}
+
+.blog-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#blog-link {
+    text-decoration: none;
+    color: darkblue;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 17px;
+    height: 44px;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+#blog-link:hover {
+    background-color: deepskyblue;
+    color: white;
+    transform: translateX(5px);
+}
+
+#blog-link span.text {
+    display: none;
+}
+
+.sidebar:hover #blog-link span.text {
+    display: inline;
+}
+
+footer {
+    background-color: skyblue;
+    text-align: center;
+    padding: 15px;
+    color: navy;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+}
+
+.blog-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-in;
+}
+
+.blog-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blog-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+}
+
+.blog-modal-content {
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 191, 255, 0.1);
+    padding: 40px;
+    min-width: 300px;
+    max-width: 90vw;
+    text-align: center;
+    animation: slideIn 0.2s ease-out;
+}
+
+.blog-modal-header {
+    font-size: 24px;
+    font-weight: 700;
+    color: navy;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+}
+
+.blog-modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.blog-modal-btn {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.blog-modal-btn.archive {
+    background: linear-gradient(135deg, #0099ff 0%, #0066ff 100%);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.blog-modal-btn.archive:hover {
+    background: linear-gradient(135deg, #0088ff 0%, #0055ff 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 102, 255, 0.3);
+}
+
+.blog-modal-btn.write {
+    background: linear-gradient(135deg, #00cc99 0%, #00aa77 100%);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.blog-modal-btn.write:hover {
+    background: linear-gradient(135deg, #00bb88 0%, #009966 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 170, 119, 0.3);
+}
+
+.blog-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.blog-modal-close:hover {
+    color: navy;
+    transform: scale(1.2);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@media (max-width: 900px) {
+    .filter-controls {
+        flex-direction: column;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-group select {
+        flex: 1;
+    }
+}
+
+@media (max-width: 800px) {
+    header h1 { font-size: 20px; }
+    header p { font-size: 12px; }
+    .wrapper { flex-direction: column; }
+    
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        gap: 0;
+        padding: 5px 0;
+        transition: none;
+        overflow: hidden;
+    }
+    
+    .sidebar:hover {
+        width: 100%;
+    }
+    
+    .sidebar a,
+    #blog-link {
+        padding: 8px 5px;
+        justify-content: center;
+        font-size: 12px;
+        flex: 1 0 0;
+        flex-shrink: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .sidebar a span.text,
+    #blog-link span.text { 
+        display: inline; 
+        font-size: 12px; 
+    }
+    
+    .main-content { padding: 15px; }
+    
+    .calendar-section,
+    .entries-section {
+        padding: 20px;
+    }
+
+    .calendar-header {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .entry-item {
+        padding: 12px;
+    }
+    
+    .view-range-btn {
+        font-size: 10px !important;
+        padding: 5px 8px !important;
+    }
+
+    .month-year-display h2 {
+        font-size: 20px;
+        width: 100%;
+    }
+
+    .calendar-header button {
+        flex: 1;
+        min-width: 100px;
+    }
+
+    .day {
+        min-height: 40px;
+        font-size: 12px;
+        padding: 8px 4px;
+    }
+
+    footer { font-size: 11px; padding: 10px; }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        padding: 3px 0;
+    }
+    
+    .sidebar a,
+    #blog-link {
+        padding: 6px;
+        font-size: 11px;
+        height: 40px;
+    }
+    
+    .sidebar a span.text,
+    #blog-link span.text {
+        font-size: 10px;
+    }
+
+    .calendar-section,
+    .entries-section {
+        padding: 15px;
+    }
+
+    .calendar-header button {
+        padding: 8px 10px;
+        font-size: 16px;
+    }
+
+    .day {
+        min-height: 38px;
+        font-size: 11px;
+    }
+
+    .filter-controls {
+        gap: 8px;
+    }
+
+    .filter-group label {
+        font-size: 11px;
+    }
+
+    .filter-group select {
+        font-size: 11px;
+        padding: 6px 8px;
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Christian G. Mendoza</h1>
+    <p>Exploring life, learning every step, building better habits</p>
+</header>
+
+<div class="wrapper">
+    <div class="main-content">
+        <section>
+            <div class="archive-container">
+                <div class="calendar-section">
+                    <div class="calendar-header">
+                        <button id="prev-month">&larr;</button>
+                        <div class="month-year-display">
+                            <h2 id="month-year">April 2026</h2>
+                        </div>
+                        <button id="next-month">&rarr;</button>
+                    </div>
+
+                    <div class="filter-controls">
+                        <div class="filter-group">
+                            <label for="year-select">Year:</label>
+                            <select id="year-select"></select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="month-select">Month:</label>
+                            <select id="month-select"></select>
+                        </div>
+                        <div class="filter-group" style="flex-direction: row; gap: 8px; justify-content: center; margin-top: 10px; width: 100%; flex-wrap: wrap;">
+                            <label>View:</label>
+                            <button class="filter-btn active" data-filter-mode="daily">Daily</button>
+                            <button class="filter-btn" data-filter-mode="weekly">Weekly</button>
+                            <button class="filter-btn" data-filter-mode="monthly">Monthly</button>
+                            <button class="filter-btn" data-filter-mode="yearly">Yearly</button>
+                            <button class="filter-btn" data-filter-mode="custom">Custom</button>
+                        </div>
+
+                        <div id="custom-date-range" class="custom-date-range" style="display: none;">
+                            <div class="date-input-group">
+                                <label for="start-date">From:</label>
+                                <input type="date" id="start-date">
+                            </div>
+                            <div class="date-input-group">
+                                <label for="end-date">To:</label>
+                                <input type="date" id="end-date">
+                            </div>
+                            <button id="apply-date-filter" class="filter-btn" style="margin-top: 10px;">Apply Filter</button>
+                        </div>
+                    </div>
+
+                    <div class="weekdays">
+                        <div>Sun</div>
+                        <div>Mon</div>
+                        <div>Tue</div>
+                        <div>Wed</div>
+                        <div>Thu</div>
+                        <div>Fri</div>
+                        <div>Sat</div>
+                    </div>
+
+                    <div class="days-grid"></div>
+                </div>
+
+                <div class="entries-section">
+                    <div class="entries-header">📚 Entries</div>
+                    <div class="entries-list" id="entries-list">
+                        <div class="no-entries">Select a date to view entries</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <aside class="sidebar">
+        <a href="index.html"><span>🏠</span><span class="text">Home</span></a>
+        <a href="about.html"><span>👤</span><span class="text">About Me</span></a>
+        <a href="journey.html"><span>🏆</span><span class="text">Journey</span></a>
+
+        <div class="blog-menu">
+            <a id="blog-link" onclick="openBlogModal(event)"><span>📝</span><span class="text">Blogs</span></a>
+        </div>
+
+        <a href="extras.html"><span>🎮</span><span class="text">Extras</span></a>
+        <a href="gallery.html"><span>🖼️</span><span class="text">Gallery</span></a>
+        <a href="contact.html"><span>✉️</span><span class="text">Contact</span></a>
+    </aside>
+</div>
+
+<footer>
+    &copy; 2026 Christian G. Mendoza
+</footer>
+
+<div id="blog-modal" class="blog-modal">
+    <div class="blog-modal-overlay" onclick="closeBlogModal()"></div>
+    <div class="blog-modal-content">
+        <button class="blog-modal-close" onclick="closeBlogModal()">&times;</button>
+        <div class="blog-modal-header">📝 Blog Options</div>
+        <div class="blog-modal-buttons">
+            <a href="view-archive.html" class="blog-modal-btn archive">
+                <span>📅</span>
+                <span>View Archive</span>
+            </a>
+            <a href="write-entry.html" class="blog-modal-btn write">
+                <span>✍️</span>
+                <span>Write New Entry</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Blog Modal Functions
+function openBlogModal(event) {
+    event.preventDefault();
+    document.getElementById('blog-modal').classList.add('show');
+}
+
+function closeBlogModal() {
+    document.getElementById('blog-modal').classList.remove('show');
+}
+
+// Close modal on ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeBlogModal();
+    }
+});
+
+// Global variables
+let blogData = [];
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+let filterMode = 'daily'; // daily, weekly, monthly, yearly, custom
+let customDateStart = null;
+let customDateEnd = null;
+const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+
+// Parse date from "April 17, 2026" format
+function parseDateString(dateStr) {
+    const match = dateStr.match(/(\w+)\s+(\d+),\s+(\d+)/);
+    if (!match) return null;
+    const monthName = match[1];
+    const day = parseInt(match[2]);
+    const year = parseInt(match[3]);
+    const monthIndex = monthNames.indexOf(monthName);
+    return { year, month: monthIndex, day };
+}
+
+// Create date key (YYYY-MM-DD)
+function getDateKey(year, month, day) {
+    return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+}
+
+// Get week start and end dates
+function getWeekRange(year, month, day) {
+    const date = new Date(year, month, day);
+    const dayOfWeek = date.getDay();
+    const diffToMonday = date.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+    const weekStart = new Date(year, month, diffToMonday);
+    const weekEnd = new Date(weekStart.getTime() + 6 * 24 * 60 * 60 * 1000);
+    return { start: weekStart, end: weekEnd };
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Load blogs from localStorage (unified data source)
+    blogData = JSON.parse(localStorage.getItem('publishedBlogs')) || [];
+    
+    // Parse dates for all blogs
+    blogData.forEach(blog => {
+        const parsed = parseDateString(blog.date);
+        if (parsed) {
+            blog.dateObj = new Date(parsed.year, parsed.month, parsed.day);
+            blog.year = parsed.year;
+            blog.month = parsed.month;
+            blog.day = parsed.day;
+            blog.dateKey = getDateKey(parsed.year, parsed.month, parsed.day);
+        }
+    });
+
+    // Sort by date (latest first)
+    blogData.sort((a, b) => b.dateObj - a.dateObj);
+
+    // Set defaults
+    if (blogData.length > 0) {
+        const latestBlog = blogData[0];
+        currentYear = latestBlog.year;
+        currentMonth = latestBlog.month;
+    }
+
+    initializeCalendar();
+    addFilterListeners();
+});
+
+function initializeCalendar() {
+    const yearSelect = document.getElementById('year-select');
+    const monthSelect = document.getElementById('month-select');
+    const prevBtn = document.getElementById('prev-month');
+    const nextBtn = document.getElementById('next-month');
+
+    // Get unique years from blog data, or use default years
+    let years = [...new Set(blogData.map(b => b.year))].sort((a, b) => b - a);
+    
+    // If no years from blogs, provide a range of years (current year +/- 2)
+    if (years.length === 0) {
+        const currentYearNum = new Date().getFullYear();
+        years = [currentYearNum + 2, currentYearNum + 1, currentYearNum, currentYearNum - 1, currentYearNum - 2].sort((a, b) => b - a);
+    }
+    
+    // Populate year select
+    yearSelect.innerHTML = '';
+    years.forEach(year => {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+    });
+    yearSelect.value = currentYear;
+
+    // Populate months
+    populateMonths(currentYear);
+    monthSelect.value = currentMonth;
+
+    // Initial render
+    renderCalendar(currentMonth, currentYear);
+
+    // Event listeners
+    prevBtn.addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+            yearSelect.value = currentYear;
+            populateMonths(currentYear);
+        }
+        monthSelect.value = currentMonth;
+        renderCalendar(currentMonth, currentYear);
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+            yearSelect.value = currentYear;
+            populateMonths(currentYear);
+        }
+        monthSelect.value = currentMonth;
+        renderCalendar(currentMonth, currentYear);
+    });
+
+    yearSelect.addEventListener('change', () => {
+        currentYear = parseInt(yearSelect.value);
+        populateMonths(currentYear);
+        currentMonth = parseInt(monthSelect.value);
+        renderCalendar(currentMonth, currentYear);
+    });
+
+    monthSelect.addEventListener('change', () => {
+        currentMonth = parseInt(monthSelect.value);
+        renderCalendar(currentMonth, currentYear);
+    });
+}
+
+function addFilterListeners() {
+    // Add listeners for filter mode buttons (if they exist)
+    const filterBtns = document.querySelectorAll('[data-filter-mode]');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            filterMode = btn.getAttribute('data-filter-mode');
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Show/hide custom date range inputs
+            const customDateRange = document.getElementById('custom-date-range');
+            if (filterMode === 'custom') {
+                customDateRange.style.display = 'flex';
+            } else {
+                customDateRange.style.display = 'none';
+            }
+            
+            // Re-render calendar and show entries for new filter mode
+            renderCalendar(currentMonth, currentYear);
+            displayEntriesForCurrentView();
+        });
+    });
+    
+    // Apply custom date filter
+    const applyBtn = document.getElementById('apply-date-filter');
+    if (applyBtn) {
+        applyBtn.addEventListener('click', () => {
+            const startInput = document.getElementById('start-date');
+            const endInput = document.getElementById('end-date');
+            
+            if (startInput.value && endInput.value) {
+                customDateStart = new Date(startInput.value);
+                customDateEnd = new Date(endInput.value);
+                
+                // Adjust end date to include the entire day
+                customDateEnd.setHours(23, 59, 59, 999);
+                
+                displayEntriesForCurrentView();
+            } else {
+                alert('Please select both start and end dates');
+            }
+        });
+    }
+}
+
+function displayEntriesForCurrentView() {
+    let entries = [];
+    
+    switch(filterMode) {
+        case 'daily':
+            // Don't auto-display for daily - requires clicking a specific date
+            break;
+        case 'weekly':
+            // Show all entries from the week containing the first day of current month
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const weekRange = getWeekRange(currentYear, currentMonth, 1);
+            entries = blogData.filter(blog => 
+                blog.dateObj >= weekRange.start && blog.dateObj <= weekRange.end
+            );
+            break;
+        case 'monthly':
+            // Show all entries for current month
+            entries = blogData.filter(blog => 
+                blog.year === currentYear && blog.month === currentMonth
+            );
+            break;
+        case 'yearly':
+            // Show all entries for current year
+            entries = blogData.filter(blog => 
+                blog.year === currentYear
+            );
+            break;
+        case 'custom':
+            // Show all entries within custom date range
+            if (customDateStart && customDateEnd) {
+                entries = blogData.filter(blog => 
+                    blog.dateObj >= customDateStart && blog.dateObj <= customDateEnd
+                );
+            }
+            break;
+    }
+    
+    if (filterMode !== 'daily') {
+        entries.sort((a, b) => b.dateObj - a.dateObj);
+        displayEntries(entries);
+    }
+}
+
+function populateMonths(year) {
+    const monthSelect = document.getElementById('month-select');
+    monthSelect.innerHTML = '';
+    const monthsWithBlogs = [...new Set(blogData.filter(b => b.year === year).map(b => b.month))].sort((a, b) => a - b);
+    
+    // Always show all months, highlight ones with blogs
+    for (let i = 0; i < 12; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = monthNames[i];
+        
+        // Mark months with blogs (optional: can add visual indicator if needed)
+        if (monthsWithBlogs.includes(i)) {
+            option.textContent = monthNames[i] + ' •';
+        }
+        
+        monthSelect.appendChild(option);
+    }
+}
+
+function renderCalendar(month, year) {
+    document.getElementById('month-year').textContent = `${monthNames[month]} ${year}`;
+    const daysGrid = document.querySelector('.days-grid');
+    daysGrid.innerHTML = '';
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const lastDate = new Date(year, month + 1, 0).getDate();
+
+    // Add empty cells
+    for (let i = 0; i < firstDay; i++) {
+        const emptyDay = document.createElement('div');
+        emptyDay.className = 'day empty';
+        daysGrid.appendChild(emptyDay);
+    }
+
+    // Add days
+    for (let day = 1; day <= lastDate; day++) {
+        const dayEl = document.createElement('div');
+        dayEl.className = 'day';
+        dayEl.textContent = day;
+
+        const dateKey = getDateKey(year, month, day);
+        const entriesForDate = blogData.filter(b => b.dateKey === dateKey);
+
+        if (entriesForDate.length > 0) {
+            dayEl.classList.add('active');
+            dayEl.title = `${entriesForDate.length} entry/entries`;
+            dayEl.style.cursor = 'pointer';
+            dayEl.addEventListener('click', () => {
+                displayEntriesByFilter(year, month, day, entriesForDate);
+                dayEl.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    dayEl.style.transform = 'scale(1)';
+                }, 100);
+            });
+        }
+
+        daysGrid.appendChild(dayEl);
+    }
+    
+    // Display entries for current filter mode view
+    displayEntriesForCurrentView();
+}
+
+function displayEntriesByFilter(year, month, day, clickedEntries) {
+    let filteredEntries = [];
+
+    switch(filterMode) {
+        case 'daily':
+            // Show only entries for selected date
+            filteredEntries = clickedEntries;
+            break;
+        case 'weekly':
+            // Show all entries in the same week
+            const weekRange = getWeekRange(year, month, day);
+            filteredEntries = blogData.filter(blog => 
+                blog.dateObj >= weekRange.start && blog.dateObj <= weekRange.end
+            );
+            break;
+        case 'monthly':
+            // Show all entries in the same month
+            filteredEntries = blogData.filter(blog => 
+                blog.year === year && blog.month === month
+            );
+            break;
+        case 'yearly':
+            // Show all entries in the same year
+            filteredEntries = blogData.filter(blog => 
+                blog.year === year
+            );
+            break;
+    }
+
+    // Sort by date descending
+    filteredEntries.sort((a, b) => b.dateObj - a.dateObj);
+
+    displayEntries(filteredEntries);
+}
+
+function displayEntries(entries) {
+    const entriesList = document.getElementById('entries-list');
+    entriesList.innerHTML = '';
+
+    if (entries.length === 0) {
+        entriesList.innerHTML = '<div class="no-entries">No entries found</div>';
+        return;
+    }
+
+    entries.forEach(entry => {
+        const entryEl = document.createElement('div');
+        entryEl.className = 'entry-item';
+        
+        // Format date for URL parameter (YYYY-MM-DD)
+        const dateObj = new Date(entry.year, entry.month, entry.day);
+        const dateStr = dateObj.toISOString().split('T')[0];
+        
+        // Create buttons container
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.style.display = 'flex';
+        buttonsContainer.style.gap = '8px';
+        buttonsContainer.style.alignItems = 'center';
+        buttonsContainer.style.marginTop = '8px';
+        
+        // Entry title (clicks to show only this entry)
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'entry-title';
+        titleDiv.textContent = escapeHtml(entry.title);
+        titleDiv.style.cursor = 'pointer';
+        titleDiv.style.flex = '1';
+        titleDiv.addEventListener('click', () => {
+            window.location.href = `blogs.html?id=${entry.id}`;
+        });
+        
+        // Date info
+        const dateDiv = document.createElement('div');
+        dateDiv.className = 'entry-date';
+        dateDiv.textContent = entry.date;
+        
+        // Visit Entries button (shows all entries in timeframe)
+        const visitBtn = document.createElement('button');
+        visitBtn.textContent = '📚 View Range';
+        visitBtn.style.padding = '6px 10px';
+        visitBtn.style.border = '1px solid rgba(0, 191, 255, 0.3)';
+        visitBtn.style.borderRadius = '6px';
+        visitBtn.style.fontSize = '11px';
+        visitBtn.style.color = 'navy';
+        visitBtn.style.background = 'rgba(0, 191, 255, 0.05)';
+        visitBtn.style.cursor = 'pointer';
+        visitBtn.style.fontWeight = '600';
+        visitBtn.style.transition = 'all 0.2s ease';
+        visitBtn.style.whiteSpace = 'nowrap';
+        
+        visitBtn.addEventListener('mouseover', () => {
+            visitBtn.style.background = 'rgba(0, 191, 255, 0.1)';
+            visitBtn.style.borderColor = 'rgba(0, 191, 255, 0.6)';
+        });
+        visitBtn.addEventListener('mouseout', () => {
+            visitBtn.style.background = 'rgba(0, 191, 255, 0.05)';
+            visitBtn.style.borderColor = 'rgba(0, 191, 255, 0.3)';
+        });
+        
+        visitBtn.addEventListener('click', () => {
+            // Get the date range from current filter
+            let startDate = null;
+            let endDate = null;
+            
+            if (filterMode === 'custom' && customDateStart && customDateEnd) {
+                startDate = customDateStart.toISOString().split('T')[0];
+                endDate = customDateEnd.toISOString().split('T')[0];
+            } else if (filterMode === 'daily') {
+                // If on daily, show just that day
+                startDate = dateStr;
+                endDate = dateStr;
+            } else if (filterMode === 'weekly') {
+                const weekRange = getWeekRange(entry.year, entry.month, entry.day);
+                startDate = weekRange.start.toISOString().split('T')[0];
+                endDate = weekRange.end.toISOString().split('T')[0];
+            } else if (filterMode === 'monthly') {
+                startDate = `${entry.year}-${String(entry.month + 1).padStart(2, '0')}-01`;
+                const lastDay = new Date(entry.year, entry.month + 1, 0);
+                endDate = lastDay.toISOString().split('T')[0];
+            } else if (filterMode === 'yearly') {
+                startDate = `${entry.year}-01-01`;
+                endDate = `${entry.year}-12-31`;
+            }
+            
+            if (startDate && endDate) {
+                window.location.href = `blogs.html?startDate=${startDate}&endDate=${endDate}`;
+            }
+        });
+        
+        entryEl.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+                <div style="flex: 1;">
+                    <div class="entry-title" style="cursor: pointer; color: deepskyblue;">${escapeHtml(entry.title)}</div>
+                    <div class="entry-date">${entry.date}</div>
+                </div>
+                <button style="padding: 6px 10px; border: 1px solid rgba(0, 191, 255, 0.3); border-radius: 6px; font-size: 11px; color: navy; background: rgba(0, 191, 255, 0.05); cursor: pointer; font-weight: 600; transition: all 0.2s ease; white-space: nowrap;" class="view-range-btn">📚 View Range</button>
+            </div>
+        `;
+        
+        // Add click handler to title (inside the created HTML)
+        const titleElement = entryEl.querySelector('.entry-title');
+        titleElement.addEventListener('click', () => {
+            window.location.href = `blogs.html?id=${entry.id}`;
+        });
+        
+        // Add click handler to button
+        const btn = entryEl.querySelector('.view-range-btn');
+        btn.addEventListener('click', () => {
+            let startDate = null;
+            let endDate = null;
+            
+            if (filterMode === 'custom' && customDateStart && customDateEnd) {
+                startDate = customDateStart.toISOString().split('T')[0];
+                endDate = customDateEnd.toISOString().split('T')[0];
+            } else if (filterMode === 'daily') {
+                startDate = dateStr;
+                endDate = dateStr;
+            } else if (filterMode === 'weekly') {
+                const weekRange = getWeekRange(entry.year, entry.month, entry.day);
+                startDate = weekRange.start.toISOString().split('T')[0];
+                endDate = weekRange.end.toISOString().split('T')[0];
+            } else if (filterMode === 'monthly') {
+                startDate = `${entry.year}-${String(entry.month + 1).padStart(2, '0')}-01`;
+                const lastDay = new Date(entry.year, entry.month + 1, 0);
+                endDate = lastDay.toISOString().split('T')[0];
+            } else if (filterMode === 'yearly') {
+                startDate = `${entry.year}-01-01`;
+                endDate = `${entry.year}-12-31`;
+            }
+            
+            if (startDate && endDate) {
+                window.location.href = `blogs.html?startDate=${startDate}&endDate=${endDate}`;
+            }
+        });
+        
+        entriesList.appendChild(entryEl);
+    });
+}
+
+// Helper to escape HTML
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
+
+</body>
+</html>

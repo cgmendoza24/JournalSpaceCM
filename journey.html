@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journey - Christian G. Mendoza</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: aliceblue;
+    color: darkblue;
+}
+
+header {
+    background-color: skyblue;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+
+header h1 {
+    font-size: 24px;
+    color: navy;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 14px;
+    color: darkblue;
+}
+
+.wrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+article {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    line-height: 1.9;
+    border-left: 5px solid deepskyblue;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+article h2 {
+    color: deepskyblue;
+    margin-bottom: 15px;
+}
+
+article p {
+    margin-bottom: 1.3em;
+    text-align: justify;
+}
+
+article strong {
+    font-weight: bold;
+}
+
+article em {
+    font-style: italic;
+}
+
+article blockquote {
+    border-left: 3px solid deepskyblue;
+    margin: 1em 0;
+    padding-left: 12px;
+    color: #003366;
+    font-style: italic;
+}
+
+.sidebar {
+    width: 60px;
+    background-color: rgba(176, 224, 230, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    transition: width 0.3s;
+    backdrop-filter: blur(4px);
+    flex-wrap: wrap;
+}
+
+.sidebar:hover {
+    width: 160px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: darkblue;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 17px;
+    height: 44px;
+}
+
+.sidebar a:hover {
+    background-color: deepskyblue;
+    color: white;
+    transform: translateX(5px);
+}
+
+.sidebar a span.text {
+    display: none;
+    font-size: 17px;
+}
+
+.sidebar:hover a span.text {
+    display: inline;
+}
+
+footer {
+    background-color: skyblue;
+    text-align: center;
+    padding: 15px;
+    color: navy;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+}
+
+@media (max-width: 800px) {
+    header h1 { font-size: 20px; }
+    header p { font-size: 12px; }
+    .wrapper { flex-direction: column; }
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        gap: 0;
+        padding: 5px 0;
+        transition: none;
+        overflow: hidden;
+    }
+    .sidebar:hover {
+        width: 100% !important;
+    }
+    .sidebar a {
+        padding: 8px 5px;
+        justify-content: center;
+        font-size: 12px;
+        flex: 1 0 0;
+        flex-shrink: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .sidebar a span.text { display: inline; font-size: 12px; }
+    .main-content { padding: 15px; }
+    footer { font-size: 11px; padding: 10px; }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        padding: 3px 0;
+    }
+    .sidebar a {
+        padding: 6px;
+        font-size: 11px;
+        height: 40px;
+    }
+    .sidebar a span.text {
+        font-size: 10px;
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Christian G. Mendoza</h1>
+    <p>Exploring life, learning every step, building better habits</p>
+</header>
+
+<div class="wrapper">
+    <div class="main-content">
+        <section>
+            <article>
+                <h2>🏆 Journey & Achievements</h2>
+
+                <p>My journey has never felt <em>straightforward</em>. It has been shaped by trial, adjustment, and quiet effort behind the scenes.</p>
+
+                <p>Academically, I was fortunate to receive recognition along the way. I graduated as <strong>Valedictorian</strong> in senior high school and earned <strong>First Honorable Mention</strong> during elementary. I also received awards in different areas such as mathematics, arts, research, and creative competitions. Some of these included <strong>Best Director</strong>, <strong>Best in Poem Writing</strong>, <strong>Most Artistic</strong>, <strong>Best Game Creator</strong>, and <strong>First Place</strong> in a school film festival.</p>
+
+                <p>While these achievements may look impressive on paper, they did not come easily. There were moments of doubt and pressure. What carried me through was <strong>consistency</strong>. Showing up even when motivation was low and keeping at it even when results were not immediate.</p>
+
+                <p>One defining moment happened during the pandemic. I struggled academically and almost failed some subjects, especially math. Instead of giving up, I decided to <em>focus my energy</em>, set clear goals, and work steadily. Slowly, those efforts added up, eventually leading me to graduate as valedictorian.</p>
+
+                <p>That experience taught me that achievement is not just about intelligence or talent. It is about <strong>persistence, discipline, and managing your energy</strong>. While I focused on academics, I sometimes neglected my health and relationships.</p>
+
+                <p>Now I see achievements differently. They are not just milestones, but lessons that shape how I move forward. I value creativity, leadership, problem solving, and perseverance not because they win awards, but because they help me grow as a person.</p>
+
+                <blockquote>This section reflects the journey behind the results, the effort, mistakes, and lessons that guide me, one step at a time.</blockquote>
+
+            </article>
+        </section>
+    </div>
+
+    <aside class="sidebar">
+        <a href="index.html"><span>🏠</span><span class="text">Home</span></a>
+        <a href="about.html"><span>👤</span><span class="text">About Me</span></a>
+        <a href="journey.html"><span>🏆</span><span class="text">Journey</span></a>
+        <a href="blogs.html"><span>📝</span><span class="text">Blogs</span></a>
+        <a href="extras.html"><span>🎮</span><span class="text">Extras</span></a>
+        <a href="gallery.html"><span>🖼️</span><span class="text">Gallery</span></a>
+        <a href="contact.html"><span>✉️</span><span class="text">Contact</span></a>
+    </aside>
+</div>
+
+<footer>
+    &copy; 2026 Christian G. Mendoza
+</footer>
+
+</body>
+</html>

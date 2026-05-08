@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extras - Christian G. Mendoza</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: aliceblue;
+    color: darkblue;
+}
+
+header {
+    background: skyblue;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+}
+
+header h1 {
+    font-size: 24px;
+    color: navy;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 14px;
+    color: darkblue;
+}
+
+.wrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+article {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    line-height: 1.7;
+    border-left: 5px solid deepskyblue;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+article h2 {
+    color: deepskyblue;
+    margin-bottom: 20px;
+}
+
+article h3 {
+    color: darkblue;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    font-size: 20px;
+    border-bottom: 1px solid deepskyblue;
+    padding-bottom: 6px;
+}
+
+article h4 {
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: darkblue;
+}
+
+article p {
+    margin-bottom: 12px;
+}
+
+article ul {
+    margin-left: 20px;
+    margin-bottom: 12px;
+}
+
+article li {
+    margin-bottom: 8px;
+}
+
+article strong {
+    font-weight: bold;
+}
+
+article em {
+    font-style: italic;
+    color: navy;
+}
+
+article mark {
+    background-color: deepskyblue;
+    color: white;
+    padding: 0 3px;
+    border-radius: 3px;
+}
+
+.sidebar {
+    width: 60px;
+    background-color: rgba(176, 224, 230, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    transition: width 0.3s;
+    backdrop-filter: blur(4px);
+    flex-wrap: wrap;
+}
+
+.sidebar:hover {
+    width: 160px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: darkblue;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 17px;
+    height: 44px;
+}
+
+.sidebar a:hover {
+    background: deepskyblue;
+    color: white;
+    transform: translateX(5px);
+}
+
+.sidebar a span.text {
+    display: none;
+    font-size: 17px;
+}
+
+.sidebar:hover a span.text {
+    display: inline;
+    font-size: 17px;
+}
+
+
+footer {
+    background: skyblue;
+    text-align: center;
+    padding: 15px;
+    color: navy;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+}
+
+
+@media (max-width: 800px) {
+    header h1 { font-size: 20px; }
+    header p { font-size: 12px; }
+    .wrapper { flex-direction: column; }
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        gap: 0;
+        padding: 5px 0;
+        transition: none;
+        overflow: hidden;
+    }
+    .sidebar:hover {
+        width: 100% !important;
+    }
+    .sidebar a {
+        padding: 8px 5px;
+        justify-content: center;
+        font-size: 12px;
+        flex: 1 0 0;
+        flex-shrink: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .sidebar a span.text { display: inline; font-size: 12px; }
+    .main-content { padding: 15px; }
+    footer { font-size: 11px; padding: 10px; }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        padding: 3px 0;
+    }
+    .sidebar a {
+        padding: 6px;
+        font-size: 11px;
+        height: 40px;
+    }
+    .sidebar a span.text {
+        font-size: 10px;
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Christian G. Mendoza</h1>
+    <p>Exploring life, learning every step, building better habits</p>
+</header>
+
+<div class="wrapper">
+    <div class="main-content">
+        <section>
+            <article>
+                <h2>Extras</h2>
+                <p>This is a corner for everything that doesn’t fit neatly into other sections. Here, I share my favorite media, helpful tips, and reflections that make this space feel personal.</p>
+                
+                <h3>Favorite Media</h3>
+                <p>I enjoy watching anime, movies, and series. If you’re looking for recommendations, here are my personal ratings for everything I’ve watched. <em>All of them are amazing, but some resonated with me more deeply.</em></p>
+                
+                <h4>📌 Anime</h4>
+                <ul>
+                    <li><strong>One Piece</strong> – 10/10 🔥</li>
+                    <li><strong>My Hero Academia</strong> – 9.9/10</li>
+                    <li><strong>Dr. Stone</strong> – 9.8/10</li>
+                    <li><strong>Demon Slayer</strong> – 9.7/10</li>
+                    <li><strong>Wind Breaker</strong> – 9.6/10</li>
+                    <li><strong>Spy x Family</strong> – 9.5/10</li>
+                    <li><strong>Mashle: Magic and Muscles</strong> – 9.4/10</li>
+                    <li><strong>Fairy Tail</strong> – 9.3/10</li>
+                    <li><strong>The Promised Neverland</strong> – 9.2/10</li>
+                    <li><strong>A Day Before Us</strong> – 9.1/10</li>
+                    <li><strong>Golden Time</strong> – 9.0/10</li>
+                </ul>
+
+                
+                <h4>📌 Anime / K-Movies</h4>
+                <ul>
+                    <li><strong>A Silent Voice</strong> – 9.7/10</li>
+                    <li><strong>Your Name</strong> – 9.6/10</li>
+                    <li><strong>Want to Eat Your Pancreas</strong> – 9.6/10</li>
+                    <li><strong>Grave of the Fireflies</strong> – 9.5/10</li>
+                    <li><strong>The Moon</strong> – 9.4/10</li>
+                    <li><strong>20th Century Girl</strong> – 9.3/10</li>
+                    <li><strong>Weathering with You</strong> – 9.2/10</li>
+                    <li><strong>The Garden of Words</strong> – 9.1/10</li>
+                    <li><strong>5 Centimeters per Second</strong> – 9.0/10</li>
+                    <li><strong>Tune in for Love</strong> – 9.0/10</li>
+                </ul>
+
+                
+                <h4>📌 K-Dramas / Shows</h4>
+                <ul>
+                    <li><strong>Queen of Tears</strong> – 9.8/10</li>
+                    <li><strong>Twinkling Watermelon</strong> – 9.8/10</li>
+                    <li><strong>Love Next Door</strong> – 9.8/10</li>
+                    <li><strong>Moving</strong> – 9.6/10</li>
+                    <li><strong>Fight For My Way</strong> – 9.5/10</li>
+                    <li><strong>All of Us Are Dead</strong> – 9.3/10</li>
+                    <li><strong>My Dearest Nemesis</strong> – 9.4/10</li>
+                    <li><strong>True Beauty</strong> – 9.2/10</li>
+                    <li><strong>Backstreet Rookie</strong> – 9.2/10</li>
+                    <li><strong>Business Proposal</strong> – 9.2/10</li>
+                </ul>
+
+                <h3>Tips & Reflections</h3>
+                <ul>
+                    <li>Take a few minutes each day to pause and reflect.</li>
+                    <li>Celebrate your progress, not just the end results.</li>
+                    <li>Balance work and rest; one is meaningless without the other.</li>
+                    <li>Notice how you spend your energy and dedicate it to what matters most.</li>
+                </ul>
+
+                <h3>Life Reflections</h3>
+                <p>Thoughts and insights I’ve gathered from life. Small reminders to live more fully and mindfully every day.</p>
+                <ul>
+                    <li>"Energy is limited, and using it unwisely can leave us exhausted or frustrated."</li>
+                    <li>"Growth is not only about reaching goals. It is also about noticing the steps along the way."</li>
+                    <li>"Life happens in the present. You have to live it now."</li>
+                    <li>Living in the future makes us forget to enjoy the present.</li>
+                    <li>"Small moments, small victories, and the steps you take each day are what shape your journey."</li>
+                    <li>"Happiness is something to practice every day, even in the smallest ways."</li>
+                </ul>
+
+            </article>
+        </section>
+    </div>
+
+    <aside class="sidebar">
+        <a href="index.html"><span>🏠</span><span class="text">Home</span></a>
+        <a href="about.html"><span>👤</span><span class="text">About Me</span></a>
+        <a href="journey.html"><span>🏆</span><span class="text">Journey</span></a>
+        <a href="blogs.html"><span>📝</span><span class="text">Blogs</span></a>
+        <a href="extras.html"><span>🎮</span><span class="text">Extras</span></a>
+        <a href="gallery.html"><span>🖼️</span><span class="text">Gallery</span></a>
+        <a href="contact.html"><span>✉️</span><span class="text">Contact</span></a>
+    </aside>
+</div>
+
+<footer> 
+    &copy; 2026 Christian G. Mendoza
+</footer>
+
+</body>
+</html>

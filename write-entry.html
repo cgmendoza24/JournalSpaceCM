@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Write Entry - Christian G. Mendoza</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: aliceblue;
+    color: darkblue;
+}
+
+header {
+    background-color: skyblue;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+
+header h1 {
+    font-size: 24px;
+    color: navy;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 14px;
+    color: darkblue;
+}
+
+.wrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+.editor-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.editor-header {
+    margin-bottom: 20px;
+}
+
+.editor-header input {
+    border: none;
+    background-color: transparent;
+    font-size: 28px;
+    color: deepskyblue;
+    font-weight: bold;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 2px solid deepskyblue;
+    margin-bottom: 15px;
+}
+
+.editor-header input:focus {
+    outline: none;
+    border-bottom: 2px solid navy;
+}
+
+.editor-metadata {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.metadata-field {
+    flex: 1;
+    min-width: 150px;
+}
+
+.metadata-field label {
+    display: block;
+    font-size: 12px;
+    color: navy;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.metadata-field input,
+.metadata-field select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid rgba(0, 0, 128, 0.3);
+    border-radius: 4px;
+    font-size: 13px;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.metadata-field input:focus,
+.metadata-field select:focus {
+    outline: none;
+    border: 1px solid deepskyblue;
+    background-color: white;
+}
+
+.toolbar {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(0, 0, 128, 0.2);
+    backdrop-filter: blur(6px);
+}
+
+.toolbar-group {
+    display: flex;
+    gap: 5px;
+    border-right: 1px solid rgba(0, 0, 128, 0.2);
+    padding-right: 10px;
+}
+
+.toolbar-group:last-child {
+    border-right: none;
+}
+
+button.format-btn {
+    background-color: rgba(0, 191, 255, 0.1);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    color: navy;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    transition: background 0.2s, border-color 0.2s, transform 0.1s;
+}
+
+button.format-btn:hover {
+    background-color: rgba(0, 191, 255, 0.2);
+    border-color: rgba(0, 191, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+button.format-btn.active {
+    background-color: deepskyblue;
+    color: white;
+    border-color: deepskyblue;
+}
+
+button.format-btn:active {
+    transform: translateY(0);
+}
+
+.editor-area {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 12px;
+    line-height: 1.8;
+    min-height: 400px;
+    border: 1px solid rgba(0, 0, 128, 0.2);
+    backdrop-filter: blur(6px);
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: darkblue;
+}
+
+.editor-area:focus {
+    outline: none;
+    border: 2px solid deepskyblue;
+}
+
+.editor-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.action-btn {
+    padding: 12px 24px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    font-weight: bold;
+}
+
+.action-btn.save {
+    background-color: deepskyblue;
+    color: white;
+}
+
+.action-btn.save:hover {
+    background-color: #0077b6;
+    transform: translateY(-2px);
+}
+
+.action-btn.preview {
+    background-color: rgba(0, 191, 255, 0.1);
+    color: deepskyblue;
+    border: 2px solid deepskyblue;
+}
+
+.action-btn.preview:hover {
+    background-color: rgba(0, 191, 255, 0.2);
+}
+
+.action-btn.cancel {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: navy;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.action-btn.cancel:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.sidebar {
+    width: 60px;
+    background-color: rgba(176, 224, 230, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    transition: width 0.3s;
+    backdrop-filter: blur(4px);
+    flex-wrap: wrap;
+}
+
+.sidebar:hover {
+    width: 160px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: darkblue;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 17px;
+    height: 44px;
+}
+
+.sidebar a:hover {
+    background-color: deepskyblue;
+    color: white;
+    transform: translateX(5px);
+}
+
+.sidebar a span.text {
+    display: none;
+}
+
+.sidebar:hover a span.text {
+    display: inline;
+}
+
+.blog-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#blog-link {
+    text-decoration: none;
+    color: darkblue;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 17px;
+    height: 44px;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+#blog-link:hover {
+    background-color: deepskyblue;
+    color: white;
+    transform: translateX(5px);
+}
+
+#blog-link span.text {
+    display: none;
+}
+
+.sidebar:hover #blog-link span.text {
+    display: inline;
+}
+
+.blog-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-in;
+}
+
+.blog-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blog-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+}
+
+.blog-modal-content {
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 191, 255, 0.1);
+    padding: 40px;
+    min-width: 300px;
+    max-width: 90vw;
+    text-align: center;
+    animation: slideIn 0.2s ease-out;
+}
+
+.blog-modal-header {
+    font-size: 24px;
+    font-weight: 700;
+    color: navy;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+}
+
+.blog-modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.blog-modal-btn {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.blog-modal-btn.archive {
+    background: linear-gradient(135deg, #0099ff 0%, #0066ff 100%);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.blog-modal-btn.archive:hover {
+    background: linear-gradient(135deg, #0088ff 0%, #0055ff 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 102, 255, 0.3);
+}
+
+.blog-modal-btn.write {
+    background: linear-gradient(135deg, #00cc99 0%, #00aa77 100%);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.blog-modal-btn.write:hover {
+    background: linear-gradient(135deg, #00bb88 0%, #009966 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 170, 119, 0.3);
+}
+
+.blog-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.blog-modal-close:hover {
+    color: navy;
+    transform: scale(1.2);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+footer {
+    background-color: skyblue;
+    text-align: center;
+    padding: 15px;
+    color: navy;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: deepskyblue;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.3s ease;
+}
+
+.notification.show {
+    display: block;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 800px) {
+    header h1 { font-size: 20px; }
+    header p { font-size: 12px; }
+    .wrapper { flex-direction: column; }
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        gap: 0;
+        padding: 5px 0;
+        transition: none;
+        overflow: hidden;
+    }
+    .sidebar:hover {
+        width: 100% !important;
+    }
+    .sidebar a,
+    #blog-link {
+        padding: 8px 5px;
+        justify-content: center;
+        font-size: 12px;
+        flex: 1 0 0;
+        flex-shrink: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .sidebar a span.text,
+    #blog-link span.text { display: inline; font-size: 12px; }
+    .main-content { padding: 15px; }
+    
+    .toolbar {
+        flex-direction: column;
+        gap: 2px;
+    }
+    
+    .toolbar-group {
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 128, 0.2);
+        padding-bottom: 8px;
+        padding-right: 0;
+    }
+    
+    .toolbar-group:last-child {
+        border-bottom: none;
+    }
+    
+    .editor-area {
+        min-height: 300px;
+        font-size: 14px;
+    }
+    
+    footer { font-size: 11px; padding: 10px; }
+}
+
+@media (max-width: 600px) {
+    .sidebar a,
+    #blog-link {
+        padding: 6px;
+        font-size: 11px;
+        height: 40px;
+    }
+    .sidebar a span.text,
+    #blog-link span.text {
+        font-size: 10px;
+    }
+    
+    .editor-header input {
+        font-size: 20px;
+    }
+    
+    .metadata-field {
+        min-width: 100%;
+    }
+    
+    .editor-actions {
+        flex-direction: column;
+    }
+    
+    .action-btn {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Christian G. Mendoza</h1>
+    <p>Exploring life, learning every step, building better habits</p>
+</header>
+
+<div class="wrapper">
+    <div class="main-content">
+        <div class="editor-container">
+            <div class="editor-header">
+                <input type="text" id="blog-title" placeholder="Enter blog title..." value="">
+            </div>
+
+            <div class="editor-metadata">
+                <div class="metadata-field">
+                    <label for="blog-date">Date</label>
+                    <input type="date" id="blog-date">
+                </div>
+                <div class="metadata-field">
+                    <label for="blog-mood">Mood / Tag</label>
+                    <input type="text" id="blog-mood" placeholder="e.g., Reflective, Hopeful...">
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <button class="format-btn" onclick="formatText('bold')" title="Bold">
+                        <strong>B</strong>
+                    </button>
+                    <button class="format-btn" onclick="formatText('italic')" title="Italic">
+                        <em>I</em>
+                    </button>
+                    <button class="format-btn" onclick="formatText('underline')" title="Underline">
+                        <u>U</u>
+                    </button>
+                </div>
+                
+                <div class="toolbar-group">
+                    <button class="format-btn" onclick="formatText('insertUnorderedList')" title="Bullet List">
+                        • List
+                    </button>
+                    <button class="format-btn" onclick="formatText('insertOrderedList')" title="Numbered List">
+                        # List
+                    </button>
+                </div>
+                
+                <div class="toolbar-group">
+                    <button class="format-btn" onclick="formatText('quote')" title="Quote">
+                        " Quote
+                    </button>
+                    <button class="format-btn" onclick="clearFormatting()" title="Clear Formatting">
+                        Clear
+                    </button>
+                </div>
+            </div>
+
+            <div class="editor-area" id="editor" contenteditable="true" role="textbox" aria-label="Blog content editor">
+                Start writing here...
+            </div>
+
+            <div class="editor-actions">
+                <button class="action-btn save" onclick="saveBlog()">💾 Save Draft</button>
+                <button class="action-btn save" onclick="publishBlog()" style="background-color: #00cc99;">📤 Publish Blog</button>
+                <button class="action-btn preview" onclick="previewBlog()">👁️ Preview</button>
+                <button class="action-btn cancel" onclick="cancelEdit()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <a href="index.html"><span>🏠</span><span class="text">Home</span></a>
+        <a href="about.html"><span>👤</span><span class="text">About Me</span></a>
+        <a href="journey.html"><span>🏆</span><span class="text">Journey</span></a>
+
+        <div class="blog-menu">
+            <a id="blog-link" onclick="openBlogModal(event)"><span>📝</span><span class="text">Blogs</span></a>
+        </div>
+
+        <a href="extras.html"><span>🎮</span><span class="text">Extras</span></a>
+        <a href="gallery.html"><span>🖼️</span><span class="text">Gallery</span></a>
+        <a href="contact.html"><span>✉️</span><span class="text">Contact</span></a>
+    </aside>
+</div>
+
+<footer>
+    &copy; 2026 Christian G. Mendoza
+</footer>
+
+<div id="notification" class="notification"></div>
+
+<div id="blog-modal" class="blog-modal">
+    <div class="blog-modal-overlay" onclick="closeBlogModal()"></div>
+    <div class="blog-modal-content">
+        <button class="blog-modal-close" onclick="closeBlogModal()">&times;</button>
+        <div class="blog-modal-header">📝 Blog Options</div>
+        <div class="blog-modal-buttons">
+            <a href="view-archive.html" class="blog-modal-btn archive">
+                <span>📅</span>
+                <span>View Archive</span>
+            </a>
+            <a href="write-entry.html" class="blog-modal-btn write">
+                <span>✍️</span>
+                <span>Write New Entry</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Blog Modal Functions
+function openBlogModal(event) {
+    event.preventDefault();
+    document.getElementById('blog-modal').classList.add('show');
+}
+
+function closeBlogModal() {
+    document.getElementById('blog-modal').classList.remove('show');
+}
+
+// Close modal on ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeBlogModal();
+    }
+});
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    const editor = document.getElementById('editor');
+    const dateInput = document.getElementById('blog-date');
+    
+    // Set today's date as default
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    dateInput.value = `${year}-${month}-${day}`;
+
+    // Placeholder management
+    const placeholderText = 'Start writing here...';
+    let isPlaceholder = true;
+
+    function setPlaceholder() {
+        editor.textContent = placeholderText;
+        editor.style.color = '#999';
+        isPlaceholder = true;
+    }
+
+    function removePlaceholder() {
+        if (isPlaceholder && editor.textContent === placeholderText) {
+            editor.textContent = '';
+            editor.style.color = 'darkblue';
+            isPlaceholder = false;
+        }
+    }
+
+    editor.addEventListener('focus', removePlaceholder);
+    
+    editor.addEventListener('blur', function() {
+        if (editor.textContent.trim() === '') {
+            setPlaceholder();
+        } else {
+            isPlaceholder = false;
+            editor.style.color = 'darkblue';
+        }
+    });
+
+    editor.addEventListener('input', function() {
+        if (!isPlaceholder) {
+            editor.style.color = 'darkblue';
+        }
+    });
+
+    // Initialize placeholder
+    setPlaceholder();
+});
+
+// Formatting functions with proper text selection handling
+function formatText(command) {
+    const editor = document.getElementById('editor');
+    
+    // Ensure editor has focus
+    editor.focus();
+    
+    // Handle special cases
+    if (command === 'quote') {
+        // Custom quote handling - wrap selection in blockquote
+        const selection = window.getSelection();
+        if (selection.toString().length > 0) {
+            const selectedText = selection.toString();
+            document.execCommand('delete', false, null);
+            document.execCommand('formatBlock', false, '<blockquote>');
+            document.execCommand('insertText', false, selectedText);
+        } else {
+            // If no selection, insert empty blockquote
+            document.execCommand('formatBlock', false, '<blockquote>');
+        }
+    } else {
+        // Standard formatting commands
+        document.execCommand(command, false, null);
+    }
+    
+    editor.focus();
+}
+
+function clearFormatting() {
+    document.execCommand('removeFormat', false, null);
+    document.execCommand('formatBlock', false, '<p>');
+    document.getElementById('editor').focus();
+}
+
+function saveBlog() {
+    const title = document.getElementById('blog-title').value.trim() || 'Untitled Entry';
+    const date = document.getElementById('blog-date').value;
+    const mood = document.getElementById('blog-mood').value.trim();
+    const editor = document.getElementById('editor');
+    const content = editor.innerHTML;
+
+    // Validate: ensure it's not just placeholder text
+    if (editor.textContent.trim() === 'Start writing here...' || editor.textContent.trim() === '') {
+        showNotification('⚠️ Please write some content before saving!', 'error');
+        return;
+    }
+
+    // Create a blog object for draft
+    const draftEntry = {
+        id: 'draft_' + Date.now(),
+        title: title,
+        date: date,
+        mood: mood,
+        content: content,
+        savedAt: new Date().toLocaleString()
+    };
+
+    // Save to localStorage drafts
+    let drafts = JSON.parse(localStorage.getItem('blogDrafts')) || [];
+    if (!Array.isArray(drafts)) drafts = [];
+    drafts.push(draftEntry);
+    localStorage.setItem('blogDrafts', JSON.stringify(drafts));
+
+    showNotification('✓ Blog draft saved locally!', 'success');
+}
+
+function publishBlog() {
+    const title = document.getElementById('blog-title').value.trim() || 'Untitled Entry';
+    const date = document.getElementById('blog-date').value;
+    const mood = document.getElementById('blog-mood').value.trim();
+    const editor = document.getElementById('editor');
+    const content = editor.innerHTML;
+
+    // Validate: ensure content exists and is not placeholder
+    if (!title || !date) {
+        showNotification('⚠️ Please fill in title and date!', 'error');
+        return;
+    }
+
+    if (editor.textContent.trim() === 'Start writing here...' || editor.textContent.trim() === '') {
+        showNotification('⚠️ Please write some content before publishing!', 'error');
+        return;
+    }
+
+    // Format date display
+    const dateObj = new Date(date);
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                        'July', 'August', 'September', 'October', 'November', 'December'];
+    const formattedDate = `${monthNames[dateObj.getMonth()]} ${dateObj.getDate()}, ${dateObj.getFullYear()}`;
+
+    // Create blog object for publishing
+    const blogEntry = {
+        id: 'blog_' + Date.now(),
+        title: title,
+        date: formattedDate,
+        mood: mood,
+        content: content,
+        publishedAt: new Date().toLocaleString()
+    };
+
+    // Load existing published blogs
+    let publishedBlogs = JSON.parse(localStorage.getItem('publishedBlogs')) || [];
+    if (!Array.isArray(publishedBlogs)) publishedBlogs = [];
+    
+    // Add new blog
+    publishedBlogs.push(blogEntry);
+    
+    // Save to localStorage
+    localStorage.setItem('publishedBlogs', JSON.stringify(publishedBlogs));
+
+    showNotification('✓ Blog published! Redirecting to archive...', 'success');
+    
+    // Redirect to blogs page after short delay
+    setTimeout(() => {
+        window.location.href = 'view-archive.html';
+    }, 1500);
+}
+
+function previewBlog() {
+    const title = document.getElementById('blog-title').value.trim() || 'Untitled Entry';
+    const mood = document.getElementById('blog-mood').value.trim();
+    const date = document.getElementById('blog-date').value;
+    const editor = document.getElementById('editor');
+    const content = editor.innerHTML;
+
+    // Validate
+    if (editor.textContent.trim() === 'Start writing here...' || editor.textContent.trim() === '') {
+        showNotification('⚠️ Please write some content to preview!', 'error');
+        return;
+    }
+
+    // Format date for preview
+    const dateObj = new Date(date);
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                        'July', 'August', 'September', 'October', 'November', 'December'];
+    const formattedDate = `${monthNames[dateObj.getMonth()]} ${dateObj.getDate()}, ${dateObj.getFullYear()}`;
+
+    // Open preview in separate window - CRITICAL: all code stays within new window
+    const previewWindow = window.open('', 'preview', 'width=900,height=700');
+    const previewHTML = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>${escapeHtml(title)} - Preview</title>
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                body {
+                    font-family: Arial, sans-serif;
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 40px 20px;
+                    background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%);
+                    color: #003333;
+                }
+                .preview-container {
+                    background: white;
+                    padding: 30px;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                }
+                h1 {
+                    color: #0099ff;
+                    margin-bottom: 15px;
+                    border-bottom: 2px solid #0099ff;
+                    padding-bottom: 10px;
+                }
+                .meta {
+                    display: flex;
+                    gap: 20px;
+                    margin-bottom: 25px;
+                    font-size: 14px;
+                    color: #666;
+                }
+                .meta-item {
+                    display: flex;
+                    gap: 5px;
+                }
+                .meta-label {
+                    font-weight: bold;
+                    color: navy;
+                }
+                .content {
+                    line-height: 1.8;
+                    color: #333;
+                }
+                .content p {
+                    margin-bottom: 1em;
+                }
+                .close-btn {
+                    display: inline-block;
+                    margin-top: 20px;
+                    padding: 10px 20px;
+                    background: #0099ff;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 14px;
+                }
+                .close-btn:hover {
+                    background: #0077b6;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="preview-container">
+                <h1>${escapeHtml(title)}</h1>
+                <div class="meta">
+                    <div class="meta-item">
+                        <span class="meta-label">📅 Date:</span>
+                        <span>${formattedDate}</span>
+                    </div>
+                    ${mood ? `<div class="meta-item">
+                        <span class="meta-label">😊 Mood:</span>
+                        <span>${escapeHtml(mood)}</span>
+                    </div>` : ''}
+                </div>
+                <div class="content">
+                    ${content}
+                </div>
+                <button class="close-btn" onclick="window.close()">Close Preview</button>
+            </div>
+        </body>
+        </html>
+    `;
+
+    previewWindow.document.write(previewHTML);
+    previewWindow.document.close();
+}
+
+function cancelEdit() {
+    if (confirm('Discard changes and go back to Blogs?')) {
+        window.location.href = 'blogs.html';
+    }
+}
+
+function showNotification(message, type = 'info') {
+    const notif = document.getElementById('notification');
+    notif.textContent = message;
+    notif.className = 'notification show';
+    
+    setTimeout(() => {
+        notif.classList.remove('show');
+    }, 3000);
+}
+
+// Helper function to escape HTML
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Load previous drafts hint on load
+window.addEventListener('load', function() {
+    const drafts = JSON.parse(localStorage.getItem('blogDrafts')) || [];
+    const draftCount = Array.isArray(drafts) ? drafts.length : 0;
+    if (draftCount > 0) {
+        console.log(`ℹ️ You have ${draftCount} saved draft(s) in your browser's local storage.`);
+    }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blogs - Christian G. Mendoza</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: aliceblue;
+    color: darkblue;
+}
+
+header {
+    background-color: skyblue;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+
+header h1 {
+    font-size: 24px;
+    color: navy;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 14px;
+    color: darkblue;
+}
+
+.wrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.filter-controls-blogs {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-btn-blog {
+    padding: 6px 12px;
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 6px;
+    font-size: 12px;
+    color: navy;
+    cursor: pointer;
+    background: rgba(0, 191, 255, 0.05);
+    transition: all 0.2s ease;
+    font-weight: 600;
+}
+
+.filter-btn-blog:hover {
+    background: rgba(0, 191, 255, 0.1);
+    border-color: rgba(0, 191, 255, 0.6);
+}
+
+.filter-btn-blog.active {
+    background: linear-gradient(135deg, rgba(0, 191, 255, 0.3), rgba(0, 191, 255, 0.2));
+    border-color: rgba(0, 191, 255, 0.8);
+    color: deepskyblue;
+    font-weight: 700;
+}
+
+.date-input-group-blog {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.date-input-group-blog label {
+    font-size: 11px;
+    font-weight: 600;
+    color: navy;
+}
+
+.date-input-group-blog input {
+    padding: 6px 8px;
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 6px;
+    font-size: 11px;
+    color: navy;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.2s ease;
+}
+
+.date-input-group-blog input:focus {
+    outline: none;
+    background: white;
+    border-color: rgba(0, 191, 255, 0.8);
+    box-shadow: 0 0 0 2px rgba(0, 191, 255, 0.1);
+}
+
+#custom-date-range-blogs {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+article {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    line-height: 1.9;
+    border-left: 5px solid deepskyblue;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+article h2 {
+    color: deepskyblue;
+    margin-bottom: 15px;
+}
+
+article .date {
+    font-size: 16px;
+    color: navy;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-style: normal;
+}
+
+article p {
+    margin-bottom: 1.3em;
+    text-align: justify;
+}
+
+article strong {
+    font-weight: bold;
+}
+
+article em {
+    font-style: italic;
+}
+
+article blockquote {
+    border-left: 3px solid deepskyblue;
+    margin: 1em 0;
+    padding-left: 12px;
+    color: #003366;
+    font-style: italic;
+}
+
+.sidebar {
+    width: 60px;
+    background-color: rgba(176, 224, 230, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    transition: width 0.3s;
+    backdrop-filter: blur(4px);
+    flex-wrap: wrap;
+}
+
+.sidebar:hover {
+    width: 160px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: darkblue;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 17px;
+    height: 44px;
+}
+
+.sidebar a:hover {
+    background-color: deepskyblue;
+    color: white;
+    transform: translateX(5px);
+}
+
+.sidebar a span.text {
+    display: none;
+}
+
+.sidebar:hover a span.text {
+    display: inline;
+}
+
+.blog-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#blog-link {
+    text-decoration: none;
+    color: darkblue;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 17px;
+    height: 44px;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+#blog-link:hover {
+    background-color: deepskyblue;
+    color: white;
+    transform: translateX(5px);
+}
+
+#blog-link span.text {
+    display: none;
+}
+
+.sidebar:hover #blog-link span.text {
+    display: inline;
+}
+
+.blog-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-in;
+}
+
+.blog-modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blog-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+}
+
+.blog-modal-content {
+    position: relative;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 191, 255, 0.1);
+    padding: 40px;
+    min-width: 300px;
+    max-width: 90vw;
+    text-align: center;
+    animation: slideIn 0.2s ease-out;
+}
+
+.blog-modal-header {
+    font-size: 24px;
+    font-weight: 700;
+    color: navy;
+    margin-bottom: 30px;
+    letter-spacing: 0.5px;
+}
+
+.blog-modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.blog-modal-btn {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.blog-modal-btn.archive {
+    background: linear-gradient(135deg, #0099ff 0%, #0066ff 100%);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.blog-modal-btn.archive:hover {
+    background: linear-gradient(135deg, #0088ff 0%, #0055ff 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 102, 255, 0.3);
+}
+
+.blog-modal-btn.write {
+    background: linear-gradient(135deg, #00cc99 0%, #00aa77 100%);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.blog-modal-btn.write:hover {
+    background: linear-gradient(135deg, #00bb88 0%, #009966 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 170, 119, 0.3);
+}
+
+.blog-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    border: none;
+    background: none;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.blog-modal-close:hover {
+    color: navy;
+    transform: scale(1.2);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.modal.show {
+    display: block;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.calendar {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 191, 255, 0.1);
+    padding: 25px;
+    min-width: 320px;
+    max-width: 90vw;
+}
+
+.calendar .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar .header button {
+    background: rgba(0, 191, 255, 0.1);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    font-size: 20px;
+    color: navy;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.calendar .header button:hover {
+    background: rgba(0, 191, 255, 0.2);
+    border-color: rgba(0, 191, 255, 0.5);
+}
+
+.month-year-display {
+    flex: 1;
+    text-align: center;
+}
+
+#month-year {
+    font-weight: 700;
+    font-size: 20px;
+    color: navy;
+    display: block;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.dropdowns {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.dropdowns select {
+    padding: 6px 8px;
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 6px;
+    font-size: 13px;
+    color: navy;
+    cursor: pointer;
+    background: rgba(0, 191, 255, 0.05);
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.dropdowns select:hover {
+    background: rgba(0, 191, 255, 0.1);
+    border-color: rgba(0, 191, 255, 0.5);
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #0066aa;
+    margin-bottom: 12px;
+    gap: 6px;
+    letter-spacing: 0.5px;
+}
+
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.day {
+    text-align: center;
+    padding: 10px 6px;
+    font-size: 14px;
+    color: #999;
+    cursor: default;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    border: 1px solid transparent;
+}
+
+.day:hover {
+    background: rgba(0, 191, 255, 0.08);
+}
+
+.day:not(.active):hover {
+    background: transparent;
+}
+
+.day.active {
+    background: linear-gradient(135deg, #0099ff 0%, #0066ff 100%);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
+}
+
+.day.active::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+}
+
+.day.active:hover {
+    background: linear-gradient(135deg, #0088ff 0%, #0055ff 100%);
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 102, 255, 0.3);
+}
+
+.day.empty {
+    cursor: default;
+    color: transparent;
+}
+
+footer {
+    background-color: skyblue;
+    text-align: center;
+    padding: 15px;
+    color: navy;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+}
+
+@media (max-width: 800px) {
+    header h1 { font-size: 20px; }
+    header p { font-size: 12px; }
+    .wrapper { flex-direction: column; }
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        gap: 0;
+        padding: 5px 0;
+        transition: none;
+        overflow: hidden;
+    }
+    .sidebar:hover {
+        width: 100% !important;
+    }
+    .blog-sublist {
+        flex: 1 0 0;
+        flex-shrink: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .sidebar a {
+        padding: 8px 5px;
+        justify-content: center;
+        font-size: 12px;
+        flex: 1 0 0;
+        flex-shrink: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .sidebar a span.text { display: inline; font-size: 12px; }
+    .main-content { padding: 15px; }
+    footer { font-size: 11px; padding: 10px; }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        padding: 3px 0;
+    }
+    .sidebar a {
+        padding: 6px;
+        font-size: 11px;
+        height: 40px;
+    }
+    .sidebar a span.text {
+        font-size: 10px;
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Christian G. Mendoza</h1>
+    <p>Exploring life, learning every step, building better habits</p>
+</header>
+
+<div class="wrapper">
+    <div class="main-content">
+        <section>
+            <div class="filter-controls-blogs">
+                <label style="font-size: 12px; font-weight: 600; color: navy;">Filter:</label>
+                <button class="filter-btn-blog active" data-filter-mode="all">All</button>
+                <button class="filter-btn-blog" data-filter-mode="month">This Month</button>
+                <button class="filter-btn-blog" data-filter-mode="year">This Year</button>
+                <button class="filter-btn-blog" data-filter-mode="custom">Custom</button>
+                
+                <div id="custom-date-range-blogs" style="display: none;">
+                    <div class="date-input-group-blog">
+                        <label for="start-date-blogs">From:</label>
+                        <input type="date" id="start-date-blogs">
+                    </div>
+                    <div class="date-input-group-blog">
+                        <label for="end-date-blogs">To:</label>
+                        <input type="date" id="end-date-blogs">
+                    </div>
+                    <button id="apply-date-filter-blogs" class="filter-btn-blog" style="margin-top: 22px;">Apply</button>
+                </div>
+            </div>
+            <article id="blog-2026-03-15">
+                <h2>The Energy Within</h2>
+                <p class="date">March 15, 2026</p>
+
+                <p>This is the place where I share thoughts, lessons, and reflections from my life. Think of it as a diary of ideas, moments, and small discoveries that might resonate with someone else, or at least my future self. Here I write about growth, experiences, and what it really feels like to learn from life.</p>
+
+                <p>One thing I’ve realized is that <strong>energy</strong> is one of the most valuable things we have. How we spend it shapes our days, mood, and growth. Energy is limited, and using it unwisely can leave us exhausted or frustrated. Trying to do everything at once or spreading ourselves too thin often drains the energy we need most. Comparing yourself to others rarely helps, because everyone has their own pace. What matters is recognizing where your energy truly belongs and dedicating it to what matters to you.</p>
+
+                <p>Growing up, I learned I am not naturally quick to grasp everything. During the pandemic, I struggled with several subjects, especially math, and almost failed. But I made a choice. I focused my energy, set clear goals, and worked steadily. Slowly, I improved and eventually graduated with flying colors. That achievement felt rewarding, but also reminded me that balance matters. While I focused on academics, I sometimes neglected my health, personal time, and friendships.</p>
+
+                <p>When it was announced that I was the valedictorian, I felt a brief moment of fulfillment. But the feeling only lasted for a moment. Preparing my speech, so many thoughts rushed through my mind that I could hardly process them. It took a lot of reflection to finish my piece.</p>
+
+                <p>Looking back, I questioned my actions. Was it worth it? I realized I had been so focused on the result that I forgot to enjoy the process. It felt like reaching the top of a mountain only to find nothing there.</p>
+
+                <p>I noticed that I had been living in the future. I would tell myself I’d be happy if I achieved this or that. I was postponing my happiness. Deep down, I knew the future is not guaranteed. You cannot plan exactly when you’ll be happy.</p>
+
+                <p>Life happens in the present. You have to live it now. Results matter, but are not everything. Small moments, victories, and steps you take each day shape your journey.</p>
+
+                <blockquote>Growth is not only about reaching goals. It is also about noticing steps along the way, being kind to yourself, and appreciating effort and struggles. Happiness is something to practice every day. I am learning to slow down, enjoy the process, and take each step one at a time.</blockquote>
+
+            </article>
+
+            <article id="blog-2026-04-01">
+                <h2>Small Wins, Big Change</h2>
+                <p class="date">April 1, 2026</p>
+
+                <p>I’ve realized life is as much about small steps as big achievements. While results can be motivating, true growth happens quietly, in moments when no one is watching.</p>
+
+                <p>Lately, I’ve been working on <strong>self-discipline</strong> and learning to trust myself. It is not easy. I tend to overthink and hesitate, especially when making important decisions. Sometimes it slows me down, and I worry I’m falling behind. But I am starting to understand that moving slowly is not the same as standing still.</p>
+
+                <p>Confidence comes gradually. It comes from showing up consistently, keeping promises to myself, and trying again after failure. It is about taking action even when unsure and forgiving myself when things do not go perfectly.</p>
+
+                <p>I am also learning to create routines that support focus and growth without draining me. Simple habits, like setting small goals each day, reflecting in the evening, or taking time to rest, have become surprisingly powerful. They remind me that progress is rarely sudden but steady when nurtured.</p>
+
+                <blockquote>This entry is a reminder: confidence is not instant. Discipline is not punishment. Both are acts of care, slowly built over time. Being patient with yourself does not mean settling. It means trusting your journey.</blockquote>
+
+            </article>
+        </section>
+    </div>
+
+    <aside class="sidebar">
+        <a href="index.html"><span>🏠</span><span class="text">Home</span></a>
+        <a href="about.html"><span>👤</span><span class="text">About Me</span></a>
+        <a href="journey.html"><span>🏆</span><span class="text">Journey</span></a>
+
+    <div class="blog-menu">
+        <a id="blog-link" onclick="openBlogModal(event)"><span>📝</span><span class="text">Blogs</span></a>
+    </div>
+
+        <a href="extras.html"><span>🎮</span><span class="text">Extras</span></a>
+        <a href="gallery.html"><span>🖼️</span><span class="text">Gallery</span></a>
+        <a href="contact.html"><span>✉️</span><span class="text">Contact</span></a>
+    </aside>
+</div>
+
+<footer>
+    &copy; 2026 Christian G. Mendoza
+</footer>
+
+<div id="blog-modal" class="blog-modal">
+    <div class="blog-modal-overlay" onclick="closeBlogModal()"></div>
+    <div class="blog-modal-content">
+        <button class="blog-modal-close" onclick="closeBlogModal()">&times;</button>
+        <div class="blog-modal-header">📝 Blog Options</div>
+        <div class="blog-modal-buttons">
+            <a href="view-archive.html" class="blog-modal-btn archive">
+                <span>📅</span>
+                <span>View Archive</span>
+            </a>
+            <a href="write-entry.html" class="blog-modal-btn write">
+                <span>✍️</span>
+                <span>Write New Entry</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Blog Modal Functions
+function openBlogModal(event) {
+    event.preventDefault();
+    document.getElementById('blog-modal').classList.add('show');
+}
+
+function closeBlogModal() {
+    document.getElementById('blog-modal').classList.remove('show');
+}
+
+// Close modal on ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeBlogModal();
+    }
+});
+
+// Load and display published blogs from localStorage
+let allPublishedBlogs = [];
+let filterModeBlog = 'all';
+let customDateStartBlog = null;
+let customDateEndBlog = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    const section = document.querySelector('section');
+    
+    // Initialize localStorage with hardcoded blogs if empty
+    let publishedBlogs = JSON.parse(localStorage.getItem('publishedBlogs')) || [];
+    
+    // If no blogs in localStorage, add the default/hardcoded ones
+    if (publishedBlogs.length === 0) {
+        const defaultBlogs = [
+            {
+                id: 'blog_2026_03_03',
+                title: 'The Energy Within',
+                date: 'March 3, 2026',
+                mood: '',
+                content: '<p>This is the place where I share thoughts, lessons, and reflections from my life. Think of it as a diary of ideas, moments, and small discoveries that might resonate with someone else, or at least my future self. Here I write about growth, experiences, and what it really feels like to learn from life.</p><p>One thing I\'ve realized is that <strong>energy</strong> is one of the most valuable things we have. How we spend it shapes our days, mood, and growth. Energy is limited, and using it unwisely can leave us exhausted or frustrated. Trying to do everything at once or spreading ourselves too thin often drains the energy we need most. Comparing yourself to others rarely helps, because everyone has their own pace. What matters is recognizing where your energy truly belongs and dedicating it to what matters to you.</p><p>Growing up, I learned I am not naturally quick to grasp everything. During the pandemic, I struggled with several subjects, especially math, and almost failed. But I made a choice. I focused my energy, set clear goals, and worked steadily. Slowly, I improved and eventually graduated with flying colors. That achievement felt rewarding, but also reminded me that balance matters. While I focused on academics, I sometimes neglected my health, personal time, and friendships.</p><p>When it was announced that I was the valedictorian, I felt a brief moment of fulfillment. But the feeling only lasted for a moment. Preparing my speech, so many thoughts rushed through my mind that I could hardly process them. It took a lot of reflection to finish my piece.</p><p>Looking back, I questioned my actions. Was it worth it? I realized I had been so focused on the result that I forgot to enjoy the process. It felt like reaching the top of a mountain only to find nothing there.</p><p>I noticed that I had been living in the future. I would tell myself I\'d be happy if I achieved this or that. I was postponing my happiness. Deep down, I knew the future is not guaranteed. You cannot plan exactly when you\'ll be happy.</p><p>Life happens in the present. You have to live it now. Results matter, but are not everything. Small moments, victories, and steps you take each day shape your journey.</p><blockquote>Growth is not only about reaching goals. It is also about noticing steps along the way, being kind to yourself, and appreciating effort and struggles. Happiness is something to practice every day. I am learning to slow down, enjoy the process, and take each step one at a time.</blockquote>',
+                publishedAt: 'March 3, 2026'
+            },
+            {
+                id: 'blog_2026_03_04',
+                title: 'Small Wins, Big Change',
+                date: 'March 4, 2026',
+                mood: '',
+                content: '<p>I\'ve realized life is as much about small steps as big achievements. While results can be motivating, true growth happens quietly, in moments when no one is watching.</p><p>Lately, I\'ve been working on <strong>self-discipline</strong> and learning to trust myself. It is not easy. I tend to overthink and hesitate, especially when making important decisions. Sometimes it slows me down, and I worry I\'m falling behind. But I am starting to understand that moving slowly is not the same as standing still.</p><p>Confidence comes gradually. It comes from showing up consistently, keeping promises to myself, and trying again after failure. It is about taking action even when unsure and forgiving myself when things do not go perfectly.</p><p>I am also learning to create routines that support focus and growth without draining me. Simple habits, like setting small goals each day, reflecting in the evening, or taking time to rest, have become surprisingly powerful. They remind me that progress is rarely sudden but steady when nurtured.</p><blockquote>This entry is a reminder: confidence is not instant. Discipline is not punishment. Both are acts of care, slowly built over time. Being patient with yourself does not mean settling. It means trusting your journey.</blockquote>',
+                publishedAt: 'March 4, 2026'
+            }
+        ];
+        publishedBlogs = defaultBlogs;
+        localStorage.setItem('publishedBlogs', JSON.stringify(publishedBlogs));
+    }
+    
+    // Store all blogs and parse dates
+    allPublishedBlogs = publishedBlogs.map(blog => {
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                            'July', 'August', 'September', 'October', 'November', 'December'];
+        const match = blog.date.match(/(\w+)\s+(\d+),\s+(\d+)/);
+        let dateObj = null;
+        if (match) {
+            const monthName = match[1];
+            const day = parseInt(match[2]);
+            const year = parseInt(match[3]);
+            const monthIndex = monthNames.indexOf(monthName);
+            dateObj = new Date(year, monthIndex, day);
+        }
+        return { ...blog, dateObj };
+    });
+    
+    // Get blog ID from URL parameter
+    const params = new URLSearchParams(window.location.search);
+    const requestedBlogId = params.get('id');
+    
+    // Setup filter listeners
+    setupBlogFilters();
+    
+    // Display blogs with current filter
+    displayBlogsWithFilter();
+    
+    // If specific blog was requested, scroll to it
+    if (requestedBlogId) {
+        setTimeout(() => {
+            const targetBlog = document.getElementById(requestedBlogId);
+            if (targetBlog) {
+                targetBlog.style.boxShadow = '0 0 0 3px #0099ff';
+                targetBlog.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                setTimeout(() => {
+                    targetBlog.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+                }, 3000);
+            }
+        }, 100);
+    }
+});
+
+function setupBlogFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn-blog');
+    const customDateRangeDiv = document.getElementById('custom-date-range-blogs');
+    const applyBtn = document.getElementById('apply-date-filter-blogs');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterModeBlog = btn.getAttribute('data-filter-mode');
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            if (filterModeBlog === 'custom') {
+                customDateRangeDiv.style.display = 'flex';
+            } else {
+                customDateRangeDiv.style.display = 'none';
+            }
+            
+            displayBlogsWithFilter();
+        });
+    });
+    
+    if (applyBtn) {
+        applyBtn.addEventListener('click', () => {
+            const startInput = document.getElementById('start-date-blogs');
+            const endInput = document.getElementById('end-date-blogs');
+            
+            if (startInput.value && endInput.value) {
+                customDateStartBlog = new Date(startInput.value);
+                customDateEndBlog = new Date(endInput.value);
+                customDateEndBlog.setHours(23, 59, 59, 999);
+                filterModeBlog = 'custom';
+                
+                // Update active button
+                document.querySelectorAll('.filter-btn-blog').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-filter-mode') === 'custom') {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                displayBlogsWithFilter();
+            } else {
+                alert('Please select both start and end dates');
+            }
+        });
+    }
+}
+
+function displayBlogsWithFilter() {
+    const section = document.querySelector('section');
+    let blogsToDisplay = [];
+    const today = new Date();
+    const params = new URLSearchParams(window.location.search);
+    
+    // Check for URL parameters for custom date range
+    const urlStartDate = params.get('startDate');
+    const urlEndDate = params.get('endDate');
+    
+    if (urlStartDate && urlEndDate) {
+        // Apply URL parameters automatically
+        filterModeBlog = 'custom';
+        customDateStartBlog = new Date(urlStartDate);
+        customDateEndBlog = new Date(urlEndDate);
+        customDateEndBlog.setHours(23, 59, 59, 999);
+        
+        // Update UI
+        document.querySelectorAll('.filter-btn-blog').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-filter-mode') === 'custom') {
+                btn.classList.add('active');
+            }
+        });
+        document.getElementById('custom-date-range-blogs').style.display = 'flex';
+        document.getElementById('start-date-blogs').value = urlStartDate;
+        document.getElementById('end-date-blogs').value = urlEndDate;
+    }
+    
+    switch(filterModeBlog) {
+        case 'all':
+            blogsToDisplay = allPublishedBlogs;
+            break;
+        case 'month':
+            blogsToDisplay = allPublishedBlogs.filter(blog =>
+                blog.dateObj && blog.dateObj.getMonth() === today.getMonth() && 
+                blog.dateObj.getFullYear() === today.getFullYear()
+            );
+            break;
+        case 'year':
+            blogsToDisplay = allPublishedBlogs.filter(blog =>
+                blog.dateObj && blog.dateObj.getFullYear() === today.getFullYear()
+            );
+            break;
+        case 'custom':
+            if (customDateStartBlog && customDateEndBlog) {
+                blogsToDisplay = allPublishedBlogs.filter(blog =>
+                    blog.dateObj && blog.dateObj >= customDateStartBlog && blog.dateObj <= customDateEndBlog
+                );
+            }
+            break;
+    }
+    
+    // Remove existing articles (keep filter controls)
+    const articles = section.querySelectorAll('article');
+    articles.forEach(article => article.remove());
+    
+    // Display filtered blogs
+    blogsToDisplay.forEach(blog => {
+        const article = document.createElement('article');
+        article.id = blog.id;
+        article.innerHTML = `
+            <h2>${escapeHtml(blog.title)}</h2>
+            <p class="date">${blog.date}</p>
+            ${blog.mood ? `<p><strong>Mood:</strong> ${escapeHtml(blog.mood)}</p>` : ''}
+            <div>${blog.content}</div>
+        `;
+        section.appendChild(article);
+    });
+}
+
+// Helper function to escape HTML
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
+
+</body>
+</html>

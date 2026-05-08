@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Me - Christian G. Mendoza</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: aliceblue;
+    color: darkblue;
+}
+
+header {
+    background-color: skyblue;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+
+header h1 {
+    font-size: 24px;
+    color: navy;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 14px;
+    color: darkblue;
+}
+
+.wrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+article {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+    border-left: 5px solid deepskyblue;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+article h2 {
+    color: deepskyblue;
+    margin-bottom: 15px;
+}
+
+article p {
+    margin-bottom: 1em;
+}
+
+article strong {
+    font-weight: bold;
+}
+
+article em {
+    font-style: italic;
+}
+
+article blockquote {
+    margin: 15px 0;
+    padding-left: 15px;
+    border-left: 3px solid deepskyblue;
+    color: darkslateblue;
+    font-style: italic;
+    background-color: rgba(220, 235, 255, 0.3);
+}
+
+.sidebar {
+    width: 60px;
+    background-color: rgba(176, 224, 230, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    transition: width 0.3s;
+    backdrop-filter: blur(4px);
+    flex-wrap: wrap;
+}
+
+.sidebar:hover {
+    width: 160px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: darkblue;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 17px;
+    height: 44px;
+}
+
+.sidebar a:hover {
+    background-color: deepskyblue;
+    color: white;
+    transform: translateX(5px);
+}
+
+.sidebar a span.text {
+    display: none;
+}
+
+.sidebar:hover a span.text {
+    display: inline;
+}
+
+footer {
+    background-color: skyblue;
+    text-align: center;
+    padding: 15px;
+    color: navy;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+}
+
+@media (max-width: 800px) {
+    header h1 { font-size: 20px; }
+    header p { font-size: 12px; }
+    .wrapper { flex-direction: column; }
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        gap: 0;
+        padding: 5px 0;
+        transition: none;
+        overflow: hidden;
+    }
+    .sidebar:hover {
+        width: 100% !important;
+    }
+    .sidebar a {
+        padding: 8px 5px;
+        justify-content: center;
+        font-size: 12px;
+        flex: 1 0 0;
+        flex-shrink: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .sidebar a span.text { display: inline; font-size: 12px; }
+    .main-content { padding: 15px; }
+    footer { font-size: 11px; padding: 10px; }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        padding: 3px 0;
+    }
+    .sidebar a {
+        padding: 6px;
+        font-size: 11px;
+        height: 40px;
+    }
+    .sidebar a span.text {
+        font-size: 10px;
+    }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Christian G. Mendoza</h1>
+    <p>Exploring life, learning every step, building better habits</p>
+</header>
+
+<div class="wrapper">
+    <div class="main-content">
+        <section>
+            <article>
+                <h2>👋 Welcome!</h2>
+
+                <p>Hi, I’m <strong>Christian G. Mendoza</strong>. If you’re here, I hope this space feels <em>familiar</em>, like reading the thoughts of someone who is still figuring things out and learning along the way.</p>
+
+                <p>I’m a second-year <strong>Computer Engineering student</strong>, but beyond that, I’m still in the process of understanding who I am becoming. I am working on building <strong>self-discipline</strong> and <strong>self-control</strong>. I am trying to form better habits and improve my focus without losing balance. More than anything, I am learning how to understand myself better.</p>
+
+                <p>Right now, my life feels like a <em>process</em>. Not a finished product. Not a clear destination. Just quiet progress happening in the background.</p>
+
+                <p>This website is not about showing an ideal version of myself. It exists to document the real one; the version that is still figuring things out, reflects deeply, and sometimes feels unsure but chooses to keep going anyway.</p>
+
+                <blockquote>I imagine my future self reading this one day. Maybe years from now, when things feel clearer. I want him to remember what this stage felt like: the uncertainty, the small wins, and the effort it took to stay consistent.</blockquote>
+
+                <p>Growth for me right now looks simple:<br>
+                <strong>Better habits.<br>
+                Better focus.<br>
+                Better balance.<br>
+                Better self-understanding.</strong></p>
+
+                <p>I am trying to move at my own pace. I am keeping things steady. One step at a time. Little by little.</p>
+
+                <blockquote>This space is my outlet. A place to unclutter my mind. A place to breathe. A place where thoughts that would normally stay silent finally get written down.</blockquote>
+
+                <p>If you relate to still figuring things out, then maybe we are in the same season of life.</p>
+
+                <p><strong>Welcome to my journey.</strong> I’m glad you stopped by.</p>
+            </article>
+        </section>
+    </div>
+
+    <aside class="sidebar">
+        <a href="index.html"><span>🏠</span><span class="text">Home</span></a>
+        <a href="about.html"><span>👤</span><span class="text">About Me</span></a>
+        <a href="journey.html"><span>🏆</span><span class="text">Journey</span></a>
+        <a href="blogs.html"><span>📝</span><span class="text">Blogs</span></a>
+        <a href="extras.html"><span>🎮</span><span class="text">Extras</span></a>
+        <a href="gallery.html"><span>🖼️</span><span class="text">Gallery</span></a>
+        <a href="contact.html"><span>✉️</span><span class="text">Contact</span></a>
+    </aside>
+</div>
+
+<footer>
+    &copy; 2026 Christian G. Mendoza
+</footer>
+
+</body>
+</html>

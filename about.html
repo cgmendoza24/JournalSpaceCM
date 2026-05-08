@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Me - Christian G. Mendoza</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: aliceblue;
+    color: darkblue;
+}
+
+header {
+    background-color: skyblue;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+
+header h1 {
+    font-size: 24px;
+    color: navy;
+    margin-bottom: 5px;
+}
+
+header p {
+    font-size: 14px;
+    color: darkblue;
+}
+
+.wrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+article {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    border-radius: 12px;
+    line-height: 1.9;
+    border-left: 5px solid deepskyblue;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+article:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+article h2 {
+    color: deepskyblue;
+    margin-bottom: 15px;
+}
+
+article p {
+    margin-bottom: 1.3em;
+}
+
+article strong {
+    font-weight: bold;
+}
+
+article em {
+    font-style: italic;
+}
+
+article blockquote {
+    border-left: 3px solid deepskyblue;
+    margin: 1em 0;
+    padding-left: 12px;
+    color: #003366;
+    font-style: italic;
+}
+
+.sidebar {
+    width: 60px;
+    background-color: rgba(176, 224, 230, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    transition: width 0.3s;
+    backdrop-filter: blur(4px);
+    flex-wrap: wrap;
+}
+
+.sidebar:hover {
+    width: 160px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: darkblue;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 17px;
+    height: 44px;
+}
+
+.sidebar a:hover {
+    background-color: deepskyblue;
+    color: white;
+    transform: translateX(5px);
+}
+
+.sidebar a span.text {
+    display: none;
+}
+
+.sidebar:hover a span.text {
+    display: inline;
+}
+
+footer {
+    background-color: skyblue;
+    text-align: center;
+    padding: 15px;
+    color: navy;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+}
+
+@media (max-width: 800px) {
+    header h1 { font-size: 20px; }
+    header p { font-size: 12px; }
+    .wrapper { flex-direction: column; }
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        gap: 0;
+        padding: 5px 0;
+        transition: none;
+        overflow: hidden;
+    }
+    .sidebar:hover {
+        width: 100% !important;
+    }
+    .sidebar a {
+        padding: 8px 5px;
+        justify-content: center;
+        font-size: 12px;
+        flex: 1 0 0;
+        flex-shrink: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .sidebar a span.text { display: inline; font-size: 12px; }
+    .main-content { padding: 15px; }
+    footer { font-size: 11px; padding: 10px; }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        padding: 3px 0;
+    }
+    .sidebar a {
+        padding: 6px;
+        font-size: 11px;
+        height: 40px;
+    }
+    .sidebar a span.text {
+        font-size: 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Christian G. Mendoza</h1>
+    <p>Exploring life, learning every step, building better habits</p>
+</header>
+
+<div class="wrapper">
+    <div class="main-content">
+        <section>
+            <article>
+                <h2>👤 About Me</h2>
+
+                <p>My name is <strong>Christian Galeon Mendoza</strong>, born on <em>December 24, 2005</em>. <br>Yup, you’re right.  <em>It’s Christmas Eve!</em> I guess that explains where my name came from.
+</p>
+
+                <p>I grew up in <strong>Barangay Mangilag Norte, Candelaria, Quezon</strong>. I studied elementary at <em>Mangilag Norte Elementary School</em>, and later completed both high school and senior high school at <em>Dr. Panfilo Castro National High School</em>.</p>
+
+                <p>I was raised by my grandmother in an extended family setup. Our home was always full. I lived with my siblings, cousins, uncles, aunties, and grandparents. Our house was located a little farther from other homes, so most of my childhood revolved around family. Because of that, it was mostly just us.</p>
+
+                <blockquote>Home felt like its own small universe. Close knit and familiar.</blockquote>
+
+                <p>Growing up in that environment shaped me in quiet ways. It made me attentive to people but also a little socially awkward outside my circle. I may not talk much, especially in unfamiliar settings, but I listen. I observe. I pay attention to small details that others might miss.</p>
+
+                <p>I tend to be emotionally invested in the people around me. At times, I mirror their emotions without me realizing it. When someone is happy, I feel it too. When they laugh, I naturally laugh along. When they are struggling, I feel that weight as well. I have realized that a big part of how I feel is influenced by the people around me. It is something I am still learning to manage but it is also how I connect and empathize with others.</p>
+
+                <p>In my free time, I usually turn to <strong>anime</strong> and <strong>podcasts</strong>. They help me slow down and step outside my own thoughts. Anime allows me to explore different worlds, perspectives, and emotions. Often reflecting struggles and questions that feel familiar in real life. Podcasts give me space to think quietly while listening to different ideas and experiences. Both help clear my mind when it feels crowded.</p>
+
+                <p>If I were to describe myself honestly, I would say I think a lot before speaking or acting. Sometimes that turns into indecision. I take time when making choices because I want to understand things clearly first. While this can make me hesitant, it also helps me move with care rather than impulse. I am still learning how to balance thinking deeply with acting confidently.</p>
+
+                <p>Right now, I am in a stage of learning. I know there is so much about the world and life that I have yet to understand. I am learning how to manage my emotions, how to strengthen my discipline, and how to balance ambition with rest. I do not have everything figured out and I am slowly accepting that growth takes time.</p>
+
+                <blockquote>This is not a complete definition of who I am. It is simply a snapshot of this season in my life. Still learning. Still adjusting. Still figuring things out, little by little.</blockquote>
+
+            </article>
+        </section>
+    </div>
+
+    <aside class="sidebar">
+        <a href="index.html"><span>🏠</span><span class="text">Home</span></a>
+        <a href="about.html"><span>👤</span><span class="text">About Me</span></a>
+        <a href="journey.html"><span>🏆</span><span class="text">Journey</span></a>
+        <a href="blogs.html"><span>📝</span><span class="text">Blogs</span></a>
+        <a href="extras.html"><span>🎮</span><span class="text">Extras</span></a>
+        <a href="gallery.html"><span>🖼️</span><span class="text">Gallery</span></a>
+        <a href="contact.html"><span>✉️</span><span class="text">Contact</span></a>
+    </aside>
+</div>
+
+<footer>
+    &copy; 2026 Christian G. Mendoza
+</footer>
+
+</body>
+</html>

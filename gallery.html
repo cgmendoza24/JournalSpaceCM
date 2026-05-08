@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery - Christian G. Mendoza</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: aliceblue;
+    color: darkblue;
+}
+
+header {
+    background-color: skyblue;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+}
+
+header h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: navy;
+}
+
+header p {
+    font-size: 14px;
+    color: darkblue;
+}
+
+.wrapper {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.main-content {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h1 {
+    font-size: 24px;
+    color: deepskyblue;
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    max-width: 600px;
+    margin: auto;
+    color: darkblue;
+    font-size: 14px;
+}
+
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.gallery-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s ease;
+}
+
+.gallery-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,128,0.2);
+}
+
+.card-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-card:hover .card-image img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card-content h3 {
+    margin: 0;
+    color: deepskyblue;
+    font-size: 1.2rem;
+}
+
+.card-content span {
+    font-size: 0.8rem;
+    background: lightcyan;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 10px;
+    color: darkblue;
+}
+
+.card-content p {
+    font-size: 0.9rem;
+    color: darkblue;
+    line-height: 1.5;
+}
+
+.sidebar {
+    width: 60px;
+    background-color: rgba(176, 224, 230, 0.7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    transition: width 0.3s;
+    backdrop-filter: blur(4px);
+    flex-wrap: wrap;
+}
+
+.sidebar:hover {
+    width: 160px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: darkblue;
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 17px;
+    height: 44px;
+}
+
+.sidebar a:hover {
+    background-color: deepskyblue;
+    color: white;
+    transform: translateX(5px);
+}
+
+.sidebar a span.text {
+    display: none;
+}
+
+.sidebar:hover a span.text {
+    display: inline;
+}
+
+footer {
+    background-color: skyblue;
+    text-align: center;
+    padding: 15px;
+    color: navy;
+    font-size: 14px;
+    backdrop-filter: blur(4px);
+}
+
+
+@media(max-width: 800px) {
+    header h1 { font-size: 20px; }
+    header p { font-size: 12px; }
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .gallery-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        gap: 0;
+        padding: 5px 0;
+        transition: none;
+        overflow: hidden;
+    }
+
+    .sidebar:hover {
+        width: 100% !important;
+    }
+
+    .sidebar a {
+        padding: 8px 5px;
+        justify-content: center;
+        font-size: 12px;
+        flex: 1 0 0;
+        flex-shrink: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .sidebar a span.text {
+        display: inline;
+    }
+    
+    .main-content { padding: 15px; }
+    footer { font-size: 11px; padding: 10px; }
+}
+
+@media(max-width: 600px) {
+    .gallery-container {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        padding: 3px 0;
+    }
+
+    .sidebar a {
+        padding: 6px;
+        font-size: 11px;
+        height: 40px;
+    }
+
+    .sidebar a span.text {
+        font-size: 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Christian G. Mendoza</h1>
+    <p>Exploring life, learning every step, building better habits</p>
+</header>
+
+<div class="wrapper">
+
+    <div class="main-content">
+        <div class="section-title">
+            <h1>Moments That Matter</h1>
+            <p>A collection of images and memories that have left a mark on my journey.</p>
+        </div>
+
+        <div class="gallery-container">
+
+            <div class="gallery-card">
+                <div class="card-image">
+                    <img src="IMG/1.png" alt="Achievements">
+                </div>
+                <div class="card-content">
+                    <span>Awards</span>
+                    <h3>Achievements</h3>
+                    <p>Being recognized for academic excellence and leadership was a proud moment for me. It reminded me that the effort I put into school truly mattered.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="card-image">
+                    <img src="IMG/2.jpg" alt="Graduation Speech">
+                </div>
+                <div class="card-content">
+                    <span>Graduation Day</span>
+                    <h3>Graduation Speech</h3>
+                    <p>I delivered my graduation speech in 2024, feeling both nervous and excited. It was a moment I’ll always remember.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="card-image">
+                    <img src="IMG/3.jpg" alt="Graduation Ceremony">
+                </div>
+                <div class="card-content">
+                    <span>Graduation Day</span>
+                    <h3>Graduation Ceremony</h3>
+                    <p>I graduated as first honorable mention in 2018 and led the pledge of loyalty. Looking back, it feels like a big step in my journey.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="card-image">
+                    <img src="IMG/4.jpg" alt="First Hangout">
+                </div>
+                <div class="card-content">
+                    <span>Fun Moment</span>
+                    <h3>Pics from my First Hangout</h3>
+                    <p>This was my first time hanging out with friends after school on January 17, 2024. Funny how it only happened when I was already in senior high.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="card-image">
+                    <img src="IMG/5.jpg" alt="Family Picture">
+                </div>
+                <div class="card-content">
+                    <span>Family</span>
+                    <h3>My Cousins</h3>
+                    <p>A simple picture with my cousins from one of our family moments. These quiet times are the ones I want to remember.</p>
+                </div>
+            </div>
+
+
+            <div class="gallery-card">
+                <div class="card-image">
+                    <img src="IMG/6.jpg" alt="Hobbies">
+                </div>
+                <div class="card-content">
+                    <span>Hobbies</span>
+                    <h3>My Hobbies</h3>
+                    <p>I spend my free time watching anime and listening to podcasts. These hobbies help me relax and stay inspired.</p>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <a href="index.html"><span>🏠</span><span class="text">Home</span></a>
+        <a href="about.html"><span>👤</span><span class="text">About Me</span></a>
+        <a href="journey.html"><span>🏆</span><span class="text">Journey</span></a>
+        <a href="blogs.html"><span>📝</span><span class="text">Blogs</span></a>
+        <a href="extras.html"><span>🎮</span><span class="text">Extras</span></a>
+        <a href="gallery.html"><span>🖼️</span><span class="text">Gallery</span></a>
+        <a href="contact.html"><span>✉️</span><span class="text">Contact</span></a>
+    </aside>
+
+</div>
+
+<footer>
+    © 2026 Christian G. Mendoza
+</footer>
+
+</body>
+</html>
